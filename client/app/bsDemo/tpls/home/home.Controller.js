@@ -282,6 +282,6 @@ angular.module('shenmaApp')
          * @return {string} x
          */
         function demo(x,r,t,d){
-            return x+r;
+            return xx;
         }
     })
