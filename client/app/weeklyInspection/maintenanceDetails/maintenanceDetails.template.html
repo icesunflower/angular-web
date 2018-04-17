@@ -1,0 +1,198 @@
+<div>
+    <h2 class="pageTitle">
+        月捡车损详情
+        <i>已送修</i>
+    </h2>
+    <div class="maindetail-content">
+        <h5 class="formtitle">基本信息：</h5>
+        <div class="form-inline">
+            <div class="form-group col-md-3">
+                <label for="x2">车牌号：</label>
+                <span class="formText">川A90876</span>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="x2">车型：</label>
+                <span class="formText">Model S</span>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="x2">所属车队：</label>
+                <span class="formText">1队</span>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="x2">检查人：</label>
+                <span class="formText">张三</span>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="x2">联系电话：</label>
+                <span class="formText">18790987870</span>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="x2">上报时间：</label>
+                <span class="formText">2017-01-02  18:00</span>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="x2">报修类型：</label>
+                <span class="formText">月捡</span>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="x2">车损位置：</label>
+                <span class="formText">左后尾灯</span>
+            </div>
+        </div>
+        <div class="form-inline">
+            <div class="form-group col-md-3">
+                <label for="x2">备注：</label>
+                <span class="formText">灯罩裂开。</span>
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <div class="detaphoto">照片：</div>
+            <img src='...' alt='' class="img-thumbnail" />
+            <img src='...' alt='' class="img-thumbnail" />
+            <img src='...' alt='' class="img-thumbnail" />
+        </div>
+        <!-- <repair-records></repair-records> -->
+        <div class="repair-records">
+            <div class="edit-repair">
+                <h5 class="formtitle">确立责任人：</h5>
+                <button type="submit" class="btn btn-default" ng-click="runSave()">保存</button>
+            </div>
+            <div class="form-inline">
+                <div class="form-group col-xs-12">
+                    <label for="x5" class="labelname">责任人：</label>
+                    <input type="text" class="form-control" id="x5" placeholder="特斯拉4S店">
+                </div>
+                <div class="form-group col-xs-12 textarea-box">
+                    <label for="remarks" class="labelname">备注：</label>
+                    <div class="boxlimit">
+                        <textarea class="form-control" ng-model="$ctrl.remarks" ng-change="changeLimitnum()" name="remarks" maxLength="50" rows="5"
+                            cols="30" required>
+                        </textarea>
+                        <div class="limit">
+                            {{limitNum?limitNum:0}}/50
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="repair-records">
+            <div class="edit-repair">
+                <h5 class="formtitle">维修处理：</h5>
+                <button type="submit" class="btn btn-default" ng-click="runSave()">保存</button>
+            </div>
+            <div class="form-inline">
+                <div class="form-group col-xs-12">
+                    <label for="x5" class="labelname">维修意见：</label>
+                    <select class="form-control" style="min-width: 100px;">
+                            <!-- <select class="form-control" style="min-width: 100px;" ng-model="condition.limitCity"> -->
+                        <option value="" selected="selected">暂缓维修</option>
+                        <!-- <option ng-value="city.areaCode" ng-repeat="city in cityList">{{city.cityName}}</option> -->
+                        <option value="028">立即维修</option>
+                        <option value="0851">驳回</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="x5" class="labelname">预估维修费：</label>
+                    <input type="text" class="form-control sminput" id="x5" placeholder="请输入车牌号">元
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="x5">行程管家承担：</label>
+                    <input type="text" class="form-control sminput" id="x5" placeholder="请输入车牌号">元
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="x5">公司承担：</label>
+                    <input type="text" class="form-control sminput" id="x5" placeholder="请输入车牌号">元
+                </div>
+                <div class="form-group col-md-3">
+                    <input type="text" class="form-control sminput" id="x5" placeholder="4s店">
+                    <label for="x5">承担：</label>
+                    <input type="text" class="form-control sminput" id="x5" placeholder="请输入车牌号">元
+                </div>
+                <div class="form-group col-xs-12 textarea-box">
+                    <label for="remarks" class="labelname">备注：</label>
+                    <div class="boxlimit">
+                        <textarea class="form-control" ng-model="$ctrl.remarks" ng-change="changeLimitnum()" name="remarks" maxLength="50" rows="5"
+                            cols="30" required>
+                            </textarea>
+                        <div class="limit">
+                            {{limitNum?limitNum:0}}/50
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="repair-records">
+            <div class="edit-repair">
+                <h5 class="formtitle">送修记录：</h5>
+                <button type="submit" class="btn btn-default" ng-click="runSave()">保存</button>
+            </div>
+            <div class="form-inline">
+                <div class="form-group col-xs-12">
+                    <label for="x6" class="labelname">送修时间：</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" uib-datepicker-popup ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions"
+                            ng-required="true" current-text="今天" close-text="关闭" clear-text="清除" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group col-xs-12">
+                    <label for="x5" class="labelname">维修地点：</label>
+                    <input type="text" class="form-control" id="x5" placeholder="特斯拉4S店">
+                </div>
+            </div>
+
+        </div>
+        <div class="repair-records">
+            <div class="edit-repair">
+                <h5 class="formtitle">回场记录：</h5>
+                <button type="submit" class="btn btn-default" ng-click="runSave()">保存</button>
+            </div>
+            <div class="form-inline">
+                <div class="form-group col-xs-12">
+                    <label for="x6" class="labelname">回场时间：</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" uib-datepicker-popup ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions"
+                            ng-required="true" current-text="今天" close-text="关闭" clear-text="清除" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="x5" class="labelname">实际维修费：</label>
+                    <input type="text" class="form-control sminput" id="x5" placeholder="请输入车牌号">元
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="x5">行程管家承担：</label>
+                    <input type="text" class="form-control sminput" id="x5" placeholder="请输入车牌号">元
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="x5">公司承担：</label>
+                    <input type="text" class="form-control sminput" id="x5" placeholder="请输入车牌号">元
+                </div>
+                <div class="form-group col-md-3">
+                    <input type="text" class="form-control sminput" id="x5" placeholder="4s店">
+                    <label for="x5">承担：</label>
+                    <input type="text" class="form-control sminput" id="x5" placeholder="请输入车牌号">元
+                </div>
+                <div class="form-group col-xs-12 textarea-box">
+                    <label for="remarks" class="labelname">备注：</label>
+                    <div class="boxlimit">
+                        <textarea class="form-control" ng-model="$ctrl.remarks" ng-change="changeLimitnum()" name="remarks" maxLength="50" rows="5"
+                            cols="30" required>
+                                </textarea>
+                        <div class="limit">
+                            {{limitNum?limitNum:0}}/50
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

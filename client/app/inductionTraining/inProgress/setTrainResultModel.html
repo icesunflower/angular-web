@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h3 class="modal-title text-center">设置培训结果</h3>
+    <!-- <i class="glyphicon glyphicon-remove-circle text-right close-btn" ng-click="cancel()"></i> -->
+</div>
+<response-component status="responseStatus"></response-component>
+<div class="modal-body clearfix modal-padding">
+    <form novalidate="true" name="form">
+        <div class="model-mar-btm20 col-md-12">
+            <div class="form-inline">
+                <div class="form-group col-md-12" style="padding: 0">
+                    <label for="">请为所选择的员工设置培训结果，设置后无法更改：</label>
+                    <select class="form-control" ng-model="trainResult" ng-options="item as item for item in trainResultArr" style="width: 60%" required></select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 text-right">
+            <button type="button" class="btn btn-primary" ng-class="{ 'disabled': form.$invalid }" ng-click="ok()" ng-disabled="form.$invalid">确定</button>
+            <button type="button" class="btn btn-danger" ng-click="cancel()">取消</button>
+        </div>
+    </form>
+</div>

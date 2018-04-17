@@ -1,0 +1,129 @@
+<div class="container-box">
+    <div class="container-box-inner box-shadow margin-bottom" ng-hide="isCaptain">
+        <tab-bootstrap tab-actived="active" tabset="tabs"></tab-bootstrap>
+    </div>
+    <div class="conditions container-box-inner box-shadow">
+        <div class="cond" ng-show="displayWithTabPanel([5])">
+            <span>选择城市：</span>
+            <div>
+                <select ng-model="conditionsNeedSelected.cityCode" ng-options="city.cityName for city in cities" class="form-control md-width"></select>
+            </div>
+        </div>
+        <div class="cond" ng-show="displayWithTabPanel([0,1,2,4,5])">
+            <span>车队选择：</span>
+            <div>
+                <select ng-model="conditionsNeedSelected.fleetId" ng-options="fleet.fleetName for fleet in fleets" class="form-control md-width"></select>
+            </div>
+        </div>
+        <div class="cond"  ng-show="isCaptain && displayWithTabPanel([5])">
+            <span>处理状态：</span>
+            <div>
+                <select ng-model="conditionsNeedSelected.dealStatus" ng-options="deal.name for deal in adviseOfDeal" class="form-control md-width"></select>
+            </div>
+        </div>
+        <div class="cond" ng-show="displayWithTabPanel([5])">
+            <span>报修类型：</span>
+            <div>
+                <select ng-model="conditionsNeedSelected.reportType" ng-options="type.name for type in reportTypes" class="form-control md-width"></select>
+            </div>
+        </div>
+        <div class="cond" ng-show="displayWithTabPanel([1])">
+            <span>维修意见：</span>
+            <div>
+                <select ng-model="conditionsNeedSelected.suggestionType" ng-options="advise.name for advise in adviseForRepairings" class="form-control md-width"></select>
+            </div>
+        </div>
+        <div class="cond" ng-show="displayWithTabPanel([5])">
+            <span>上报时间：</span>
+            <div>
+                <span class="inline-block">
+                    <input class="form-control md-width"
+                           ng-model="reportTime.start.date"
+                           format="YYYY-MM-DD"
+                           ng-model-options="{ updateOn: 'blur' }"
+                           placeholder="起始时间"
+                           max-date="reportTime.end.date"
+                           moment-picker="reportTime.start.date">
+                </span>
+                <span class="inline-block">至</span>
+                <span class="inline-block">
+                    <input class="form-control md-width"
+                           ng-model="reportTime.end.date"
+                           format="YYYY-MM-DD"
+                           ng-model-options="{ updateOn: 'blur' }"
+                           placeholder="结束时间"
+                           min-date="reportTime.start.date"
+                           moment-picker="reportTime.end.date">
+                </span>
+            </div>
+        </div>
+        <div class="cond" ng-show="displayWithTabPanel([2,4])">
+            <span>送修时间：</span>
+            <div>
+                <span class="inline-block">
+                    <input class="form-control md-width"
+                           ng-model="repairedTime.start.date"
+                           format="YYYY-MM-DD"
+                           ng-model-options="{ updateOn: 'blur' }"
+                           placeholder="起始时间"
+                           max-date="repairedTime.end.date"
+                           moment-picker="repairedTime.start.date">
+                </span>
+                <span class="inline-block">至</span>
+                <span class="inline-block">
+                    <input class="form-control md-width"
+                           ng-model="repairedTime.end.date"
+                           format="YYYY-MM-DD"
+                           ng-model-options="{ updateOn: 'blur' }"
+                           placeholder="结束时间"
+                           min-date="repairedTime.start.date"
+                           moment-picker="repairedTime.end.date">
+                </span>
+            </div>
+        </div>
+        <div class="cond" ng-show="displayWithTabPanel([0,1,2,4,5])">
+            <span>车牌搜索：</span>
+            <div>
+                <input class="form-control lg-width" type="text" ng-model="conditions.licensePlateNo"/>
+            </div>
+        </div>
+        <button class="btn btn-primary margin-left-large" ng-show="displayWithTabPanel([2,4,5])" ng-click="export()">导出表单</button>
+        <button class="btn btn-success margin-left-large" ng-show="displayWithTabPanel([0,1,2,4,5])" ng-click="query()">查询</button>
+    </div>
+    <div class="result">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td ng-repeat="t in tableTitles track by $index">{{ t }}</td>
+                    <td>操作</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="b in tableBody track by $index">
+                    <td ng-repeat="key in tableKeys"> {{ b[key] }}</td>
+                    <td>
+                        <a ng-click="locateToDetail(b)" class="btn-link">{{ fillTargetWord(b) }}</a>
+                    </td>
+                </tr>
+                <tr ng-show="tableBody.length == 0">
+                    <td colspan="{{ tableTitles.length + 2 }}">
+                        <div style="line-height: 300px">暂无数据</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination-infomation">
+        <div class="page-total"> {{ pagination.total }}条 </div>
+        <ul uib-pagination
+             total-items="pagination.total"
+             ng-model="pagination.current"
+             max-size="pagination.maxSize"
+             class="pagination-sm"
+             items-per-page="pagination.size"
+             previous-text="上一页"
+             next-text="下一页"
+             ng-change="query()"
+             rotate="false"></ul>
+    </div>
+</div>

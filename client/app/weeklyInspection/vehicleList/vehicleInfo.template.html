@@ -1,0 +1,69 @@
+<div>
+    <div class="insdetail">
+        <div class="title-tag">{{carDatas.licensePlateNo}}</div>
+        <div class="title-name">{{titleName}}中</div>
+        <div class="insdetail-content">
+            <button type="button" class="btn btn-default addcar" ng-click="govehiceList()">返回</button>
+            <div class="check-content">
+                <div class="foronecheck" ng-class="{'checkedcolor':editType}" ng-click="checkType(0)">
+                    <span>车辆信息</span>
+                </div>
+                <div class="foronecheck" ng-class="{'checkedcolor':!editType}" ng-click="checkType(1)">
+                    <span>车辆管辖</span>
+                </div>
+            </div>
+            <div ng-show="editType" class="form-inline">
+                <div ng-show="weeklyownership!=2" class="btn-box">
+                    <button type="button" ng-show="weeklyownership==0" class="btn btn-info btn-add" ng-click="modifyFleet()">更换车队</button>
+                    <button type="button" class="btn btn-info btn-add" ng-click="modifyCar()">修改车辆信息</button>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="x5">车架号：</label>
+                    <span class="formText">{{carDatas.vin}}</span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="x2">发动机编号：</label>
+                    <span class="formText">{{carDatas.engineNo}}</span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="x3">车辆类型：</label>
+                    <span class="formText">{{carDatas.carTypeName}}</span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="x3">车辆颜色：</label>
+                    <span class="formText">{{carDatas.codeName}}</span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="x3">OBD设备类型：</label>
+                    <span class="formText">{{carDatas.obdDeviceTypeName}}</span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="x3">OBD设备编号：</label>
+                    <span class="formText">{{carDatas.obdDeviceId}}</span>
+                </div>
+                <div class="form-group col-md-3 last-group">
+                    <label for="x3">归属城市：</label>
+                    <span class="formText">{{carDatas.cityName}}</span>
+                </div>
+            </div>
+            <div ng-show="!editType">
+                <button type="button" ng-show="weeklyownership!=2" class="btn btn-danger btn-add" ng-click="changeOwnership()">更改管辖者</button>
+                <div class="form-group col-md-6">
+                    <label for="x4">管辖者变化记录：</label>
+                </div>
+                <div ng-show="recordInfo.length>0" class="timeaxis">
+                    <div class="timeaxis-one" ng-repeat="m in recordInfo">
+                        <div class="spotone"></div>
+                        <div class="carcont">
+                            <p>【车辆管辖】{{m.toOwnership!==0?m.toOwnership!==1?"退出管辖":"机务管辖":"车队运营"}}中</p>
+                            <div>
+                                <span>{{m.reason}}</span>
+                                <i>操作人：{{m.createdBy}} &nbsp;{{m.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

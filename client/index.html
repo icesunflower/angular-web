@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="shenmaApp">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title><%= htmlWebpackPlugin.options.title %></title>
+        <meta name="description" content="<%= htmlWebpackPlugin.options.title %>">
+        <!-- base url -->
+        <base href="<%= htmlWebpackPlugin.options.metadata.baseUrl %>">
+
+        <%= htmlWebpackPlugin.files.webpackManifest %>
+
+        <% if (htmlWebpackPlugin.options.metadata.isDevServer && htmlWebpackPlugin.options.metadata.HMR !== true) { %>
+        <!-- Webpack Dev Server reload -->
+        <script src="/webpack-dev-server.js"></script>
+        <% } %>
+
+        <!-- CSS will be injected by webpack here -->
+        <!-- Preload link tags will be injected by webpack here -->
+
+    </head>
+
+    <body>
+
+        <div ui-view="content" class="main" id="main"></div>
+
+        <div id="loading-bar-container" style="position: fixed; top: 0; left: 0; width: 100%;"></div>
+        <script src="https://github.jspm.io/jmcriffey/bower-traceur-runtime@0.0.87/traceur-runtime.js"></script>
+        <!-- Scripts will be injected by webpack here -->
+        <script src="./lib/plugins/My97DatePicker-4.8/WdatePicker.js"></script>
+        <script src="https://api.map.baidu.com/api?v=2.0&ak=cAmOj4C4haqYMA1gIi0sybwL16nTt026" type="text/javascript"></script>
+    </body>
+</html>

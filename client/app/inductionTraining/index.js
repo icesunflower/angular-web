@@ -1,0 +1,12 @@
+require('./inductionTraining.state.js');
+require('./inductionTraining.controller.js');
+require('./inductionTraining.service.js');
+require('./notStart');
+require('./inProgress');
+require('./qualified');
+require('./topMenu');
+require('./unQualified');
+require('./dimission');
+require('./checkComponent');
+require('./responseComponent');
+require('./js/angular-locale_zh-cn.js');

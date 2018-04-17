@@ -1,0 +1,48 @@
+<div id="training" style="margin:20px 0" class="clearfix">
+    <div class="col-md-12 mar-btm20">
+        <div class="table">
+            <table border="0" cellpadding="0" cellspacing="0">
+                <thead class="thead">
+                    <tr>
+                        <td ng-repeat="title in table.titles">{{ title }}</td>
+                    </tr>
+                </thead>
+                <tbody class="tbody">
+                    <tr ng-repeat="r in table.body track by $index" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-class="{'active': hover}">
+                        <td>{{ (pagination.current - 1) * pagination.pageSize + $index + 1 }}</td>
+                        <td>{{ r.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td>{{ r.title }}</td>
+                        <td>{{ r.states }}</td>
+                        <td>{{ r.message }}</td>
+                        <td style="min-width: 60px;">
+                            <a ng-href="{{ r.downUrl }}" ng-if="r.states == '已完成'" target="_blank">下载</a>
+                            <a ng-click="delete(r)">删除</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="load-nodata" ng-show="noData">
+                暂无数据
+            </div>
+            <div class="load-nodata" ng-show="loading">
+                正在加载中...
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12" id="pagination">
+        <div class="col-md-4 text-left total-item">总计：{{ pagination.total }}条</div>
+        <div class="col-md-8 text-right" style="font-size: 12px;">
+            <ul uib-pagination
+                total-items="pagination.total"
+                previous-text="上一页"
+                next-text="下一页"
+                max-size="5"
+                boundary-link-numbers="true"
+                rotate="false"
+                ng-model="pagination.current"
+                items-per-page="pagination.pageSize"
+                ng-change="pageChanged()">
+            </ul>
+        </div>
+    </div>
+</div>

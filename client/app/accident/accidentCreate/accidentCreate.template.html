@@ -1,0 +1,16 @@
+<div class="accident">
+    <div class="row clearfix content">
+        <title-component title="title" status-name="statusName"></title-component>
+        <div class="clearfix module">
+            <basic-info-component basicinfo-edit="basicinfoEdit" report-id="reportId" get-detil="getDetil" accident-info="accidentInfo" show-edit="showEdit" safeytyinfo-edit="safeytyinfoEdit" show-safeytyinfo-edit="showSafeytyinfoEdit"></basic-info-component>
+        </div>
+        <div class="clearfix module" ng-show="accidentInfo.basicSituation.id">
+            <safety-derpartment-component report-id="reportId" basicinfo-edit="basicinfoEdit" show-edit="showEdit" safeytyinfo-edit="safeytyinfoEdit" get-detil="getDetil" accident-info="accidentInfo" show-safeytyinfo-edit="showSafeytyinfoEdit" accident-responsibility-arr="accidentResponsibilityArr" is-safeyty-department="isSafeytyDepartment" repair-btn-name="repairBtnName"></safety-derpartment-component>
+        </div>
+        <div class="clearfix module">
+            <form novalidate="true" name="formMaintenance">
+                <maintenance-component report-id="reportId" show-maintenance="showMaintenance" repair-name="showRepairName" get-detil="getDetil" accident-info="accidentInfo" maintenance-edit="maintenanceEdit"></maintenance-component>
+            </form>
+        </div>
+    </div>
+</div>

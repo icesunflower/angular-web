@@ -1,0 +1,1 @@
+require('./maintenanceComponent.component.js');

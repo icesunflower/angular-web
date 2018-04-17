@@ -1,0 +1,16 @@
+<div class="modal-header">
+    <h3 class="modal-title text-center">提示</h3>
+</div>
+<div class="modal-body clearfix modal-padding">
+    <div class="model-mar-btm20 col-md-12">
+        <div class="form-inline">
+            <div class="form-group col-md-12" style="padding: 0">
+                <label for="">{{tips.body}}</label>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 text-right">
+        <button type="button" class="btn btn-primary" ng-click="ok()">确定</button>
+        <button type="button" class="btn btn-danger" ng-click="cancel()" ng-if="conform">取消</button>
+    </div>
+</div>

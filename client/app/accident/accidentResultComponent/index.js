@@ -1,0 +1,1 @@
+require('./accidentResultComponent.component.js');

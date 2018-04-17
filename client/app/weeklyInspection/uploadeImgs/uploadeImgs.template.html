@@ -1,0 +1,29 @@
+<div class="situations">
+    <form class="form-inline">
+        <div>
+            <h5 class="formtitle">受损照片：（最多三张）</h5>
+            <button type="submit" class="btn btn-default" ng-click="runSave()">保存</button>
+        </div>
+        <!-- <div class="upload-img" name="file" ngf-select="uploadImg($file)" ngf-multiple="true" ng-model="data.file" accept="image/*">
+            <i class="glyphicon glyphicon-plus"></i>
+            <img src="" alt="">
+        </div> -->
+        <div class="upload-box">
+            <div class="button add-img img-thumbnail" ngf-select ngf-pattern="'image/*'" ng-model="files" ngf-multiple="false">
+                <span class="glyphicon glyphicon-plus"></span>
+            </div>
+            <img src="..." alt="..." class="img-thumbnail">
+            <img src="..." alt="..." class="img-thumbnail">
+            <img src="..." alt="..." class="img-thumbnail">
+        </div>
+
+        <div class="form-group col-md-3 textarea-box">
+            <label for="remarks">备注：</label>
+            <textarea class="form-control form-width" ng-model="remarks" ng-change="changeLimitnum()" name="remarks" maxLength="50" rows="5"
+                cols="30" required></textarea>
+            <div class="limit">
+                {{limitNum?limitNum:0}}/50
+            </div>
+        </div>
+    </form>
+</div>

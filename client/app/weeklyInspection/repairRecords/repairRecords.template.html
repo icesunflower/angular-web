@@ -1,0 +1,50 @@
+<div class="repair-records">
+    <div class="edit-repair">
+        <h5 class="formtitle">送修记录：</h5>
+        <button ng-show="true" type="submit" class="btn btn-default" ng-click="runSave()">保存</button>
+    </div>
+    <div class="form-inline">
+        <div ng-show="iftime" class="form-group col-xs-12">
+            <label for="x6">送修时间：</label>
+            <div class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions"
+                    ng-required="true" current-text="今天" close-text="关闭" clear-text="清除" />
+                <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+            </div>
+        </div>
+        <div ng-show="iftext" class="form-group col-xs-12">
+            <label for="x5">维修地点：</label>
+            <input type="text" class="form-control" id="x5" placeholder="请输入车牌号">
+        </div>
+        <div ng-show="ifcost" class="form-group col-md-3">
+            <label for="x5">预计修车费：</label>
+            <input type="text" class="form-control sminput" id="x5" placeholder="请输入车牌号">元
+        </div>
+        <div ng-show="ifcost" class="form-group col-md-3">
+            <label for="x5">管家承担：</label>
+            <input type="text" class="form-control sminput" id="x5" placeholder="请输入车牌号">元
+        </div>
+        <div ng-show="ifcost" class="form-group col-md-3">
+            <label for="x5">公司承担：</label>
+            <input type="text" class="form-control sminput" id="x5" placeholder="请输入车牌号">元
+        </div>
+        <div ng-show="ifcost" class="form-group col-md-3">
+            <input type="text" class="form-control sminput" id="x5" placeholder="请输入车牌号">
+            <label for="x5">承担：</label>
+            <input type="text" class="form-control sminput" id="x5" placeholder="请输入车牌号">元
+        </div>
+        <div ng-show="ifremarks">
+            <div class="form-group col-md-3 textarea-box">
+                <label for="remarks">备注：</label>
+                <textarea class="form-control form-width" ng-model="$ctrl.remarks" ng-change="changeLimitnum()" name="remarks" maxLength="50"
+                    rows="5" cols="30" required></textarea>
+                <div class="limit">
+                    {{limitNum?limitNum:0}}/50
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

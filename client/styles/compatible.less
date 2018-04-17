@@ -1,0 +1,88 @@
+@import './variables.less';
+
+/*It's for bootstrap tab switcher to compat style sheet*/
+.tab-panel {
+    .nav-tabs {
+        border: 0;
+        margin: 0;
+    }
+    .nav-tabs > li > a {
+        border: 0;
+        border-radius: 0;
+        background-color: @grey;
+        margin: 0;
+        font-size: 16px;
+        min-width: 100px;
+        text-align: center;
+    }
+    .nav-tabs > li > a:hover {
+        background-color: @tabBgHover;
+        color: @white;
+    }
+    .nav-tabs > li.active > a,
+    .nav-tabs > li.active > a:hover,
+    .nav-tabs > li.active > a:focus {
+        background-color: @tabBg;
+        color: @white;
+        border: 0;
+    }
+}
+
+.form-control {
+    height: 30px;
+    padding: 4px 8px;
+    border-radius: 0;
+    border-color: #d9d9d9;
+}
+
+select.form-control {
+    background-color: @grey;
+}
+
+.btn {
+    height: 24px;
+    line-height: 24px;
+    padding: 0 12px;
+    font-size: 16px;
+    border-radius: 0;
+    background-image: none;
+    border: 0;
+    &.btn-primary {
+        background-color: #3da5eb;
+    }
+    &.btn-success {
+        background-color: #7bc75e;
+    }
+    &.btn-danger {
+        background-color: #d04242;
+    }
+}
+
+.btn-link {
+    color: #906745;
+    cursor: pointer;
+    &:hover {
+        color: #906745;
+        opacity: .9;
+    }
+}
+
+.table {
+    thead td {
+        background-color: @grey;
+        border-right: 1px solid #d9d9d9;
+        padding: 12px 0;
+    }
+    tbody tr {
+        &:nth-child(odd) {
+            background-color: @white;
+        }
+        &:nth-child(even) {
+            background-color: @grey;
+        }
+        td {
+            border: 0;
+            padding: 14px 0;
+        }
+    }
+}

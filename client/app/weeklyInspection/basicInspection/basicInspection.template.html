@@ -1,0 +1,56 @@
+<div class="basicInspection">
+    <form class="form-inline">
+        <div>
+            <h3 class="formtitle">基本信息：</h3>
+            <button type="submit" class="btn btn-default">保存</button>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="x1">车牌号：</label>
+            <input type="text" class="form-control" id="x1" placeholder="请输入车牌号">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="x2">车型：</label>
+            <!-- <input type="text" class="form-control" id="x2" placeholder="请输入车牌号"> -->
+            <span class="formText">Model S</span>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="x3">所属车队：</label>
+            <!-- <input type="text" class="form-control" id="x3" placeholder="请输入车牌号"> -->
+            <span class="formText">1队</span>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="x4">上次周检时间：</label>
+            <!-- <input type="text" class="form-control" id="x4" placeholder="请输入车牌号"> -->
+            <span class="formText">2017-07-27 18:00</span>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="x5">检查人：</label>
+            <input type="text" class="form-control" id="x5" placeholder="请输入车牌号">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="x6">本次周检时间：</label>
+            <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions"
+                    ng-required="true" current-text="今天" close-text="关闭" clear-text="清除" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </p>
+        </div>
+        <div class="form-group col-md-12">
+            <label for="x4">当前受损：</label>
+            <span class="formText"><i ng-click="damagedPhotos()">点击查看</i>具体照片</span>
+        </div>
+        <div class="form-group col-md-12">
+            <label for="x4">故障：</label>
+            <span class="formText">发动机故障、雨刮器故障</span>
+        </div>
+        <div class="form-group col-md-12">
+            <label for="x4">周捡：</label>
+            <span class="formText">轮毂</span>
+        </div>
+        <div class="form-group col-md-12">
+            <label for="x4">事故</label>
+        </div>
+    </form>
+</div>

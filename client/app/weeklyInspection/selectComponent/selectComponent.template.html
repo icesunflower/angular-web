@@ -1,0 +1,34 @@
+<div class="situations">
+    <form class="form-inline">
+        <div class="sit-title">
+            <h5 class="formtitle" ng-bind="$ctrl.title+'：'"></h5>
+            <button ng-show="$ctrl.ifsingle" type="submit" class="btn btn-default" ng-click="runSave()">保存</button>
+        </div>
+        <ul ng-show="$ctrl.ifsingle">
+            <li>
+                <label><input type="radio" name="optionsRadios" value="0" checked />立即维修</label>
+            </li>
+            <li>
+                <label><input type="radio" name="optionsRadios" value="1" checked />暂缓维修</label>
+            </li>
+        </ul>
+        <ul ng-show="!$ctrl.ifsingle" class="multi-select">
+            <li ng-repeat="item in $ctrl.compdata" class="checkboxcompdata">
+                <input id="{{item.id}}" type="checkbox" ng-model="item.checked" ng-change="checkChange(item)"  ng-disabled="!$ctrl.ifEdit">
+                <label class="checkbox-style" for="{{item.id}}"></label>
+                <label class="checkbox-name" for="{{item.id}}">{{item.categoryName}}</label>
+            </li>
+        </ul>
+        <div ng-show="!$ctrl.ifRemaks" class="form-group textarea-box">
+            <label for="remarks">备注：</label>
+            <span ng-show="!$ctrl.ifEdit">{{$ctrl.remarks}}</span>
+            <div class="textarea-num" ng-show="$ctrl.ifEdit">
+                <textarea class="form-control form-width" ng-model="$ctrl.remarks" ng-change="changeLimitnum()" name="remarks" maxLength="50"
+                    rows="5" cols="60" required></textarea>
+                <div class="limit">
+                    {{$ctrl.remarks?$ctrl.remarks.length:0}}/50
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

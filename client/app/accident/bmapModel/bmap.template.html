@@ -1,0 +1,19 @@
+<div class="modal-body">
+    <div class="mapBox">
+        <div class="search">
+            <form action="" novalidate="true" name="form">
+                <div class="form-inline clearfix">
+                    <div class="col-md-11" style="padding:0">
+                        <div class="form-group" style="width:100%">
+                            <input type="text" class="form-control" id="suggestId" ng-model="addres" placeholder="请输入地址" style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-md-1" style="padding: 0;">
+                        <button class="btn search-btn btn-green" ng-click="getAddress()" ng-class="{ 'disabled': form.$invalid}" ng-disabled="form.$invalid" onClick="return false;">确定</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div style="height: 500px;text-align: center;" id="map"></div>
+    </div>
+</div>

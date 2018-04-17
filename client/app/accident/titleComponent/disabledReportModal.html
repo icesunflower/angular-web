@@ -1,0 +1,29 @@
+<div class="accident" style="background: #fff">
+    <div class="modal-header">
+        <h4 class="modal-title text-center">提示</h4>
+    </div>
+    <response-component status="responseStatus"></response-component>
+    <div class="modal-body clearfix modal-padding">
+        <form novalidate="true" name="form">
+            <div class="clearfix">
+                <div class="col-md-12" style="margin: 0 0 20px 0;">
+                    <div>
+                        <div class="form-group textarea-boxs clearfix">
+                            <label for="" style="margin-bottom: 20px !important;display: inline-block;">是否驳回该条报修记录，驳回后该记录将不能继续进行维修。</label>
+                            <textarea-component desc="rejectCause" limit="50" required="true" class="width90" style="float: left;width:100%" placeholder="placeholder"></textarea-component>
+                            <!--   <textarea class="form-control form-width" id="" ng-model="rejectCause" rows="4" placeholder="请输入驳回原因（必填）" name="rejectCause" ng-maxLength="50" maxLength="50" required></textarea>
+                            <div class="limit">
+                                {{limitLen}}/50
+                            </div> -->
+                        </div>
+                    </div>
+                    <span ng-show="form.rejectCause.$dirty && form.rejectCause.$invalid" class="model-err">请输入驳回原因</span>
+                </div>
+            </div>
+            <div class="col-md-12 text-right">
+                <button type="button" class="btn btn-green btn-sm" ng-class="{ 'disabled': form.$invalid }" ng-click="ok()" ng-disabled="form.$invalid">确定</button>
+                <button type="button" class="btn btn-sm btn-red" ng-click="cancel()">取消</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+@import './../weeklyInspection.less';
+.situations {
+    overflow: hidden;
+    .upload-box {
+        .padin(20, 15);
+        img {
+            .maginleft(20);
+            .width(150);
+            .height(100);
+        }
+    }
+    .add-img {
+        display: inline-block;
+        border: 1px solid #9F9C9C;
+        box-sizing: border-box;
+        .width(150);
+        .height(100);
+        vertical-align: middle;
+        text-align: center;
+        span {
+            display: inline-block;
+            .magintop(-2);
+            .fontSize(25);
+            .lineHeight(100);
+        }
+    }
+    .textarea-box {
+        position: relative;
+        overflow: hidden;
+        textarea {
+            float: right;
+            min-width: 85%;
+            vertical-align: top !important;
+        }
+        .limit {
+            position: absolute;
+            bottom: 10px;
+            right: 30px;
+        }
+    }
+}

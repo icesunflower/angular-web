@@ -1,0 +1,1 @@
+require('./accidentCreate.controller.js');

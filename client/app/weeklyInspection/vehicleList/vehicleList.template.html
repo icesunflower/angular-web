@@ -1,0 +1,87 @@
+<div>
+    <button type="button" class="btn btn-info btn-add addcar" ng-click="addnewCar()">新增车辆</button>
+    <div class="check-content">
+        <div class="foronecheck" ng-class="{'checkedcolor':vehicleListData.ownership===0}" ng-click="checkownership(0)">
+            <span>车队运营</span>
+        </div>
+        <div class="foronecheck" ng-class="{'checkedcolor':vehicleListData.ownership==1}" ng-click="checkownership(1)">
+            <span>机务管辖</span>
+        </div>
+        <div class="foronecheck" ng-class="{'checkedcolor':vehicleListData.ownership==2}" ng-click="checkownership(2)">
+            <span>退出管辖</span>
+        </div>
+    </div>
+    <div class="form-inline">
+        <div class="search-board">
+            <div class="form-group" style="margin-left:20px;">
+                <label>归属地：</label>
+                <select class="form-control" style="min-width: 100px;" ng-model="vehicleListData.areaCode">
+                    <option value="" selected="selected">全部</option>
+                    <option ng-value="city.cityCode" ng-repeat="city in cityList">{{city.cityName}}</option>
+                </select>
+            </div>
+            <div ng-show="vehicleListData.ownership===0" class="form-group" style="margin-left:20px;">
+                <label>所属车队：</label>
+                <select class="form-control" style="min-width: 100px;" ng-model="vehicleListData.fleetId">
+                    <option value="" selected="selected">全部</option>
+                    <option ng-value="fleet.fleetId" ng-repeat="fleet in fleetList">{{fleet.fleetName}}</option>
+                </select>
+            </div>
+            <div class="form-group" style="margin-left:20px;">
+                <label for="exampleInputName2">车牌号：</label>
+                <input type="text" class="form-control" id="exampleInputName2" placeholder="请输入车牌号" ng-model="vehicleListData.licensePlateNo">
+            </div>
+            <div class="form-group" style="margin-left:20px;">
+                <label>车辆类型：</label>
+                <select class="form-control" style="min-width: 100px;" ng-model="vehicleListData.carType">
+                    <option value="" selected="selected">全部</option>
+                    <option ng-value="carType.id" ng-repeat="carType in carTypesList">{{carType.carTypeName}}</option>
+                </select>
+            </div>
+        </div>
+        <button type="button" class="btn btn-success btn-search" ng-click="queryValuePre()">查询</button>
+    </div>
+    <table class="table table-hover">
+        <thead class="thead">
+            <tr>
+                <th>序号</th>
+                <th>车牌号</th>
+                <th>车辆类型</th>
+                <th>归属地</th>
+                <th ng-show="vehicleListData.ownership===0">所属车队</th>
+                <th>月检记录</th>
+                <th>保险记录</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody class="tbody">
+            <tr ng-repeat="m in tableList track by $index">
+                <td>{{ (vehicleListData.pageNo-1) * vehicleListData.rows + $index + 1 }}</td>
+                <td>{{m.licensePlateNo}}</td>
+                <td>{{m.carTypeName}}</td>
+                <td>{{m.cityName}}</td>
+                <td ng-show="vehicleListData.ownership===0">{{m.fleetName}}</td>
+                <td>
+                    <a class="btn btn-link" ui-sref="vehicleList.inspectionDetail({'carNo':m.licensePlateNo,'ownershipId':m.ownership})">查看详情</a>
+                </td>
+                <td>
+                    <a class="btn btn-link" ui-sref="insurance({'id':m.licensePlateNo,'ownershipId':m.ownership})">查看详情</a>
+                </td>
+                <td>
+                    <a class="btn btn-link" ui-sref="vehicleList.vehicleInfo({'id':m.id,'ownershipId':m.ownership})">编辑</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="load-nodata" ng-show="noData">
+        暂无数据
+    </div>
+    <div class="foot-tab">
+        <div class="totalnum">每页{{ vehicleListData.rows }}条</div>
+        <div class="page-num">
+            <ul uib-pagination total-items="bigTotalItems" ng-model="vehicleListData.pageNo" ng-change="changePage()" max-size="5"
+                previous-text="<" next-text=">" class="pagination-sm" boundary-links="false" force-ellipses="true" items-per-page="vehicleListData.rows">
+            </ul>
+        </div>
+    </div>
+</div>

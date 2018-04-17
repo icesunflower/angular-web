@@ -1,0 +1,663 @@
+<div class="employee-file">
+    <div class="row driverAdd">
+        <div class="row first-title">
+            <div class="col-md-6">
+                <span class="lg-title">行程管家建档</span>
+            </div>
+            <div class="col-md-6 text-right line-height-63">
+                <button class="btn btn-primary" ng-click="goToDriverList()">返回</button>
+            </div>
+        </div>
+        <div class="row nav">
+            <div class="radios col-lg-offset-3 col-md-offset-3 col-lg-2 col-md-2 text-center">
+                <div>
+                    <input class="radio" id="tab1" type="radio" value="0" ng-model="tabValue">
+                    <label class="radio-style" for="tab1"></label>
+                </div>
+                <label class="label-text" for="tab1">基本信息</label>
+            </div>
+            <div class="radios col-lg-2 col-md-2 text-center">
+                <div>
+                    <input class="radio" id="tab2" type="radio" value="1" ng-model="tabValue">
+                    <label class="radio-style" for="tab2"></label>
+                </div>
+                <label class="label-text" for="tab2">其他信息</label>
+            </div>
+            <div class="radios col-lg-2 col-md-2 text-center">
+                <div>
+                    <input class="radio" id="tab3" type="radio" value="2" ng-model="tabValue">
+                    <label class="radio-style" for="tab3"></label>
+                </div>
+                <label class="label-text" for="tab3">工作履历</label>
+            </div>
+        </div>
+        <uib-tabset active="active">
+            <uib-tab index="0" heading="Form Tab">
+                <div class="first-page">
+                    <form name="baseInfo" novalidate>
+                        <div class="row ">
+                            <div class="text-center job-title col-lg-2 col-md-2 col-sm-2">
+                                <span ng-click="show()">工作信息</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td class="col-md-2 text-right"><span style="color:red">*</span>工号：</td>
+                                    <td class="col-md-2 text-center" ng-bind="driverBasicInfo.mainBean.jobNumber"></td>
+                                    <td class="col-md-2 text-right">工作城市：</td>
+                                    <td class="col-md-2 text-center"
+                                        ng-bind="driverBasicInfo.mainBean.workCityName"></td>
+                                    <td class="col-md-2 text-center">司机类型：</td>
+                                    <td class="col-md-2 text-center" ng-bind="driverBasicInfo.mainBean.driverTypeName"></td>
+                                    </tr>
+                                <tr>
+                                    <td class="col-md-2 text-right">入职时间：</td>
+                                    <td class="col-md-2 text-center"
+                                        ng-bind="driverBasicInfo.mainBean.hireDate|date:'yyyy-MM-dd'"></td>
+                                    <td class="col-md-2 text-right">培训时间：</td>
+                                    <td class="col-md-2 text-center"
+                                        ng-bind="driverBasicInfo.mainBean.trainingTime|date:'yyyy-MM-dd'"></td>
+                                    <td class="col-md-2 text-center"></td>
+                                    <td class="col-md-2 text-center"></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-2 text-right"><span style="color:red">*</span>档案编号：</td>
+                                    <td class="col-md-2 text-center">
+                                        <input class="form-control input-number" type="text" name="code"
+                                               ng-model="driverBasicInfo.mainBean.archiveCode">
+                                    </td>
+                                    <td class="col-md-2 text-right" ng-show="!driverTypeSelf"><span style="color:red">*</span>合作协议有效期：</td>
+                                    <td class="col-md-2 text-center" ng-show="!driverTypeSelf">
+                                        <select class="form-control text-center"
+                                                ng-model="driverBasicInfo.cooperationAgreementLife">
+                                            <option value="">请选择</option>
+                                            <option value="1">一年</option>
+                                            <option value="2">两年</option>
+                                            <option value="4">四年</option>
+                                            <option value="5">五年</option>
+                                        </select>
+                                    </td>
+                                    <td class="col-md-2 text-right" ng-show="driverTypeSelf"><span style="color:red">*</span>劳动合同有效期：</td>
+                                    <td class="col-md-2 text-center" ng-show="driverTypeSelf">
+                                        <select class="form-control text-center"
+                                                ng-model="driverBasicInfo.laborContractValidPeriod">
+                                            <option value="">请选择</option>
+                                            <option value="{{validity.id}}"
+                                                    ng-repeat="validity in validityOfContractList">{{validity.name}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td class="col-md-2 text-right " ng-show="driverTypeSelf"><span style="color:red">*</span>试用期：</td>
+                                    <td class="col-md-2 text-center" ng-show="driverTypeSelf">
+                                        <select class="form-control" ng-model="driverBasicInfo.probationPeriod">
+                                            <option value="">请选择</option>
+                                            <option value="{{probation.id}}"
+                                                    ng-repeat="probation in probationPeriodList">{{probation.name}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="text-center job-title col-lg-2 col-md-2 col-sm-2">
+                                <span>基本资料</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td class="col-md-2 text-right"><span style="color:red">*</span>姓名：</td>
+                                    <td class="col-md-3">
+                                        <input ng-trim="false" class="form-control input-width" style="width:150px" type="text" ng-model="driverBasicInfo.mainBean.name" maxlength="10">
+                                        <span style="color: red" ng-show='errorName'>不能输入空格</span>
+                                    </td>
+                                    <td class="col-md-2 text-right"><span style="color:red">*</span>联系电话：</td>
+                                    <td class="col-md-3 text-center">
+                                          <input class="form-control input-width" type="text" ng-model="driverBasicInfo.mainBean.mobilePhone" maxlength="11">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-2 text-right"><span style="color:red">*</span>性别：</td>
+                                    <td class="col-md-3 text-center">
+                                        <input class="radio" id="man" type="radio" value="男"
+                                               ng-model="driverBasicInfo.mainBean.sex">
+                                        <label class="radio-style" for="man"></label>
+                                        <label class="label-text" for="man">男</label>
+                                        <input class="radio" id="women" type="radio" value="女"
+                                               ng-model="driverBasicInfo.mainBean.sex">
+                                        <label class="radio-style" for="women"></label>
+                                        <label class="label-text" for="women">女</label>
+                                    </td>
+                                    <td class="col-md-2 text-right">邮箱：</td>
+                                    <td class="col-md-3 text-center">
+                                        <input class="form-control input-width" type="text"
+                                               ng-model="driverBasicInfo.email" maxlength="30">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-2 text-right"><span style="color:red">*</span>生日：</td>
+                                    <td class="col-md-3 text-center">
+                                        <p class="input-group text-center date-pick">
+                                            <input type="text" class="form-control" uib-datepicker-popup
+                                                   ng-model="driverBasicInfo.mainBean.birthday" is-open="popup1.opened"
+                                                   datepicker-options="dateOptions"
+                                                   close-text="关闭" clear-text="清空" current-text="今天" readonly/>
+                                            <span class="input-group-btn">
+                              <button type="button" class="btn btn-defatrt" ng-click="open1()">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                              </button>
+                          </span>
+                                        </p>
+                                    </td>
+                                    <td class="col-md-2 text-right ">年龄：</td>
+                                    <td class="col-md-3 text-center " ng-bind="age"></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-2 text-right ">身高：</td>
+                                    <td class="col-md-3 text-center">
+                                        <input ng-model="driverBasicInfo.height" class="form-control input-number"
+                                               maxlength="3" type="text" style="margin-right:10px"><span>CM</span>
+                                    </td>
+                                    <td class="col-md-2 text-right ">体重：</td>
+                                    <td class="col-md-3 text-center"><input class="form-control input-number"
+                                                                            maxlength="2"
+                                                                            ng-model="driverBasicInfo.weight"
+                                                                            type="text" style="margin-right:10px"><span>KG</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-2 text-right ">血型：</td>
+                                    <td class="col-md-3 text-center">
+                                        <select class="form-control text-center" ng-model="driverBasicInfo.bloodType">
+                                            <option value="">请选择</option>
+                                            <option value="{{bloodType.id}}" ng-repeat="bloodType in bloodTypeList">
+                                                {{bloodType.name}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td class="col-md-2 text-right ">政治面貌：</td>
+                                    <td class="col-md-3 text-center">
+                                        <select class="form-control" ng-model="driverBasicInfo.politicsStatus">
+                                            <option value="">请选择</option>
+                                            <option value="{{politicsStatus.id}}"
+                                                    ng-repeat="politicsStatus in politicsStatusList">
+                                                {{politicsStatus.name}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-2 text-right "><span style="color:red">*</span>籍贯：</td>
+                                    <td class="col-md-3 text-center">
+                                        <select class="form-control text-center"
+                                                ng-model="driverBasicInfo.mainBean.nativePlace">
+                                            <option value="">请选择</option>
+                                            <option value="{{province.name}}" ng-repeat="province in allProvinceLists">
+                                                {{province.name}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td class="col-md-2 text-right ">民族：</td>
+                                    <td class="col-md-3 text-center">
+                                        <input class="form-control input-width" type="text"
+                                               ng-model="driverBasicInfo.nation" maxlength="10">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-2 text-right ">婚姻状况：</td>
+                                    <td class="col-md-3 text-center">
+                                        <select class="form-control text-center"
+                                                ng-model="driverBasicInfo.maritalStatus">
+                                            <option value="">请选择</option>
+                                            <option value="{{maritalStatus.id}}"
+                                                    ng-repeat="maritalStatus in maritalStatusList">
+                                                {{maritalStatus.name}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td class="col-md-2 text-right ">生育状况：</td>
+                                    <td class="col-md-3 text-center">
+                                        <input class="radio" id="fertilityed" type="radio" value="0"
+                                               ng-model="driverBasicInfo.fertilityStatus">
+                                        <label class="radio-style" for="fertilityed"></label>
+                                        <label class="label-text" for="fertilityed">已育</label>
+                                        <input class="radio" id="unFertilityed" type="radio" value="1"
+                                               ng-model="driverBasicInfo.fertilityStatus">
+                                        <label class="radio-style" for="unFertilityed"></label>
+                                        <label class="label-text" for="unFertilityed">未育</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-2 text-right "><span style="color:red">*</span>身份证号码：</td>
+                                    <td class="col-md-3 text-center">
+                                        <input class="form-control input-width" type="text" maxlength="18"
+                                               ng-model="driverBasicInfo.mainBean.idCardNumber">
+                                    </td>
+                                    <td class="col-md-2 text-right ">身份证地址：</td>
+                                    <td class="col-md-3 text-center">
+                                        <input class="form-control input-width" type="text" maxlength="50"
+                                               ng-model="driverBasicInfo.idCardAddress">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-2 text-right ">身份证有效期至：</td>
+                                    <td class="col-md-3 text-center">
+                                        <p class="input-group text-center date-pick">
+                                            <input type="text" class="form-control" uib-datepicker-popup
+                                                   ng-model="driverBasicInfo.idCardValidDate" is-open="popup2.opened"
+                                                   datepicker-options="dateOptions"
+                                                   close-text="关闭" clear-text="清空" current-text="今天" readonly/>
+                                            <span class="input-group-btn">
+                              <button type="button" class="btn btn-defatrt" ng-click="open2()">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                              </button>
+                          </span>
+                                        </p>
+                                    </td>
+                                    <td class="col-md-2 text-right ">退伍军人：</td>
+                                    <td class="col-md-3 text-center">
+                                        <input class="radio" id="veteran" type="radio" value="1"
+                                               ng-model="driverBasicInfo.exsoldierFlag">
+                                        <label class="radio-style" for="veteran"></label>
+                                        <label class="label-text" for="veteran">是</label>
+                                        <input class="radio" id="notVeteran" type="radio" value="0"
+                                               ng-model="driverBasicInfo.exsoldierFlag">
+                                        <label class="radio-style" for="notVeteran"></label>
+                                        <label class="label-text" for="notVeteran">否</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-2 text-right ">现居住地址：</td>
+                                    <td class="col-md-3 text-center">
+                                        <input class="form-control input-width" type="text" maxlength="50"
+                                               ng-model="driverBasicInfo.currentLiveAddress">
+                                    </td>
+                                    <td class="col-md-2 text-right ">户籍性质：</td>
+                                    <td class="col-md-3 text-center">
+                                        <input class="radio" id="city" type="radio" value="1"
+                                               ng-model="driverBasicInfo.householdType">
+                                        <label class="radio-style" for="city"></label>
+                                        <label class="label-text" for="city">城镇</label>
+                                        <input class="radio" id="countryside" type="radio" value="0"
+                                               ng-model="driverBasicInfo.householdType">
+                                        <label class="radio-style" for="countryside"></label>
+                                        <label class="label-text" for="countryside">非城镇</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-2 text-right ">居住证有效期至：</td>
+                                    <td class="col-md-3 text-center">
+                                        <p class="input-group text-center date-pick">
+                                            <input type="text" class="form-control" uib-datepicker-popup
+                                                   ng-model="driverBasicInfo.residencePermitValidDate"
+                                                   is-open="popup3.opened"
+                                                   datepicker-options="dateOptions"
+                                                   close-text="关闭" clear-text="清空" current-text="今天" readonly/>
+                                            <span class="input-group-btn">
+                              <button type="button" class="btn btn-defatrt" ng-click="open3()">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                              </button>
+                          </span>
+                                        </p>
+                                    </td>
+                                    <td class="col-md-2 text-right ">个人兴趣爱好：</td>
+                                    <td class="col-md-3 text-center">
+                                        <input class="form-control input-width" type="text" maxlength="20"
+                                               ng-model="driverBasicInfo.personalHobby">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-2 text-right ">最高学历：</td>
+                                    <td class="col-md-3 text-center">
+                                        <select class="form-control" ng-model="driverBasicInfo.highestEducation">
+                                            <option value="">请选择</option>
+                                            <option value="{{education.id}}" ng-repeat="education in educationList">
+                                                {{education.name}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td class="col-md-2 text-right ">毕业学校：</td>
+                                    <td class="col-md-3 text-center">
+                                        <input class="form-control input-width" type="text" maxlength="20"
+                                               ng-model="driverBasicInfo.graduationSchool">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-2 text-right ">职业/资格证书：</td>
+                                    <td class="col-md-3 text-center">
+                                        <input class="form-control input-width" type="text" maxlength="30"
+                                               ng-model="driverBasicInfo.certificates">
+                                    </td>
+                                    <td class="col-md-2 text-right ">银行卡号：</td>
+                                    <td class="col-md-3 text-center">
+                                        <input class="form-control input-width" type="text" maxlength="19"
+                                               ng-model="driverBasicInfo.bankCardNumber">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-2 text-right ">紧急联络人：</td>
+                                    <td class="col-md-3 text-center">
+                                        <input class="form-control input-width" type="text" maxlength="10"
+                                               ng-model="driverBasicInfo.emergencyContact">
+                                    </td>
+                                    <td class="col-md-2 text-right ">紧急联系电话：</td>
+                                    <td class="col-md-3 text-center">
+                                        <input class="form-control input-width" maxlength="11" type="text"
+                                               ng-model="driverBasicInfo.emergencyMobilePhone">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-2 text-right" ng-click="showSome()">身份证正面照：</td>
+                                    <td class="col-md-3 text-center">
+                                        <div class="upload-img" name="file" ngf-select="uploadIdFront($file)"
+                                             ngf-multiple="false" ngf-pattern="'.pdf,.jpg,.jpeg'" ng-model="data.file" accept=".png,.jpg,.jpeg" ngf-max-size="2MB">
+                                            <i ng-hide="hadIdCardFrontPic" class="glyphicon glyphicon-plus"></i>
+                                            <img ng-src="{{driverBasicInfo.idCardFrontPic}}" alt="">
+                                        </div>
+                                    </td>
+                                    <td class="col-md-2 text-right ">身份证背面照：</td>
+                                    <td class="col-md-3 text-center">
+                                        <div class="upload-img" name="file" ngf-select="uploadIdBack($file)"
+                                             ngf-multiple="false" ng-model="data.file" accept=".png,.jpg,.jpeg" ngf-max-size="2MB">
+                                            <i ng-hide="hadIdCardBackPic" class="glyphicon glyphicon-plus"></i>
+                                            <img ng-src="{{driverBasicInfo.idCardBackPic}}" alt="">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="row text-center">
+                            <button class="btn btn-primary" ng-disabled="saveBaseInfoBtn" ng-click="saveBaseInfo()">保存
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </uib-tab>
+            <uib-tab index="1" heading="Tab One">
+                <form novalidate name="otherForm">
+                    <div class="second-page">
+                        <div class="row ">
+                            <div class="text-center job-title col-lg-2 col-md-2 col-sm-2">
+                                <span>驾驶证</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td class="col-md-2 text-right"><span style="color:red">*</span>驾驶证类型：</td>
+                                    <td class="col-md-3 text-center">
+                                        <select class="form-control" ng-model="driverOtherInfo.drivingLicenceType">
+                                            <option value="">请选择</option>
+                                            <option value="{{license.id}}" ng-repeat="license in driverLicenseList">
+                                                {{license.name}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td class="col-md-2 text-right"><span style="color:red">*</span>领证时间：</td>
+                                    <td class="col-md-3 text-center">
+                                        <p class="input-group text-center date-pick">
+                                            <input type="text" class="form-control" uib-datepicker-popup
+                                                   ng-model="driverOtherInfo.getCardTime" is-open="popup4.opened"
+                                                   datepicker-options="dateOptions"
+                                                   close-text="关闭" clear-text="清空" current-text="今天" readonly/>
+                                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-defatrt" ng-click="open4()">
+                                  <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-2 text-right"><span style="color:red">*</span>驾驶证档案号：</td>
+                                    <td class="col-md-3 text-center">
+                                        <input class="form-control input-width" type="text"
+                                               ng-model="driverOtherInfo.drivingLicenceNumber" maxlength="18">
+                                    </td>
+                                    <td class="col-md-2 text-right">驾龄：</td>
+                                    <td class="col-md-3 text-center">
+                                        <span ng-bind="drivingExperience"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-2 text-right"><span style="color:red">*</span>驾驶证有效期至：</td>
+                                    <td colspan="3">
+                                        <p class="input-group text-center date-pick overDate">
+                                            <input type="text" class="form-control" uib-datepicker-popup
+                                                   ng-model="driverOtherInfo.drivingLicenceValidDate"
+                                                   is-open="popup5.opened"
+                                                   datepicker-options="dateOptions"
+                                                   close-text="关闭" clear-text="清空" current-text="今天" readonly/>
+                                            <span class="input-group-btn">
+                            <button type="button" class="btn btn-defatrt" ng-click="open5()">
+                              <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                        </span>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-2 text-right"><span style="color:red">*</span>驾驶证主页照：</td>
+                                    <td class="col-md-3 text-center">
+                                        <div class="upload-img" name="file" ngf-select="uploadLicenseFront($file)"
+                                             ngf-multiple="false" ng-model="data.file" accept=".png,.jpg,.jpeg" ngf-max-size="2MB">
+                                            <i ng-hide="hadDrivingLicenceFirstPic" class="glyphicon glyphicon-plus"></i>
+                                            <img ng-src="{{driverOtherInfo.drivingLicenceFirstPic}}" alt="">
+                                        </div>
+                                        <input type="hidden" ng-model="$scope.driverOtherInfo.drivingLicenceFirstPic">
+                                    </td>
+                                    <td class="col-md-2 text-right"><span style="color:red">*</span>驾驶证附页照：</td>
+                                    <td class="col-md-3 text-center">
+                                        <div class="upload-img" name="file" ngf-select="uploadLicenseBack($file)"
+                                             ngf-multiple="false" ng-model="data.file" accept=".png,.jpg,.jpeg" ngf-max-size="2MB">
+                                            <i ng-hide="hadDrivingLicenceSecondPic"
+                                               class="glyphicon glyphicon-plus"></i>
+                                            <img ng-src="{{driverOtherInfo.drivingLicenceSecondPic}}" alt="">
+                                        </div>
+                                        <input type="hidden" ng-model="$scope.driverOtherInfo.drivingLicenceSecondPic">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="row ">
+                            <div class="text-center job-title col-lg-2 col-md-2 col-sm-2">
+                                <span>家庭成员</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td class="col-md-2 text-center">本人关系</td>
+                                    <td class="col-md-1 text-center">姓名</td>
+                                    <td class="col-md-2 text-center">联系电话</td>
+                                    <td class="col-md-6 text-center">工作单位</td>
+                                    <td class="col-md-6 text-center">操作</td>
+                                </tr>
+                                <tr ng-repeat="menber in driverOtherInfo.familyMembers">
+                                    <td class="col-md-2 text-center">
+                                        <input class="form-control" type="text" maxlength="10"
+                                               ng-model="menber.relation">
+                                    </td>
+                                    <td class="col-md-1 text-center">
+                                        <input class="form-control" type="text" maxlength="10" ng-model="menber.name">
+                                    </td>
+                                    <td class="col-md-2 text-center">
+                                        <input class="form-control" type="text" maxlength="11"
+                                               ng-model="menber.mobilePhone">
+                                    </td>
+                                    <td class="col-md-6 text-center">
+                                        <input class="form-control" type="text" maxlength="50"
+                                               ng-model="menber.workUnit">
+                                    </td>
+                                    <td class="col-md-1 text-center">
+                                        <a href ng-click="delMember($index)">删除</a>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="row">
+                                <a href ng-click="addFamily()">添加家庭成员</a>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="text-center job-title col-lg-2 col-md-2 col-sm-2">
+                                <span>亲属关系</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <input class="radio" id="haveOnDuty" type="radio" value="1" ng-click="showOnDuty()"
+                                   ng-model="driverOtherInfo.domesticRelation">
+                            <label class="radio-style" for="haveOnDuty"></label>
+                            <label class="label-text" for="haveOnDuty">有亲属在公司就职</label>
+                            <input class="radio" id="notHaveOnDuty" type="radio" value="0" ng-click="hideOnDuty()"
+                                   ng-model="driverOtherInfo.domesticRelation">
+                            <label class="radio-style" for="notHaveOnDuty"></label>
+                            <label class="label-text" for="notHaveOnDuty">无亲属在公司就职</label>
+                            <div ng-show="showHaveOnDuty">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td class="col-md-2 text-center">亲属姓名</td>
+                                        <td class="col-md-1 text-center">亲属关系</td>
+                                        <td class="col-md-4 text-center">一级部门</td>
+                                        <td class="col-md-4 text-center">二级部门</td>
+                                        <td class="col-md-1 text-center">操作</td>
+                                    </tr>
+                                    <tr class="text-center" ng-repeat="companyRelations in driverOtherInfo.companyRelations">
+                                        <td class="col-md-2 text-center relation-input">
+                                            <input class="form-control" style="width:50%;display:inline-block"
+                                                   type="text" maxlength="10" ng-model="companyRelations.name">
+                                            <button class="btn btn-primary"
+                                                    ng-click="checkEmployee($index,companyRelations.name)">查询
+                                            </button>
+                                            <div class="ralation-box" ng-show="companyRelations.showSelect"
+                                                 ng-mouseleave="companyRelations.showSelect = false">
+                                                <table class="companyRelations-list table table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <td>亲属姓名</td>
+                                                        <td>一级部门</td>
+                                                        <td>二级部门</td>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr style="cursor:pointer" ng-repeat="item in searchRelationsList"
+                                                        ng-click="choiceMember(item)">
+                                                        <td ng-bind="item.name"></td>
+                                                        <td ng-bind="item.firstPartName"></td>
+                                                        <td ng-bind="item.nextPartName"></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </td>
+                                        <td class="col-md-1 text-center">
+                                            <input class="form-control" type="text" ng-model="companyRelations.relation"
+                                                   maxlength="10">
+                                        </td>
+                                        <td class="col-md-4 text-center">
+                                            <input class="form-control" type="text"
+                                                   ng-model="companyRelations.firstLevelDepartment" disabled>
+                                        </td>
+                                        <td class="col-md-4 text-center">
+                                            <input class="form-control" type="text"
+                                                   ng-model="companyRelations.secondLevelDepartment" disabled>
+                                        </td>
+                                        <td class="col-md-4 text-center">
+                                            <a href ng-click="delWorkMember($index)">删除</a>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="row">
+                                    <a href ng-click='addRelationMember()'>添加亲属</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-center">
+                            <button class="btn btn-primary" ng-disabled="saveOtherInfoBtn" ng-click="saveOtherInfo()">
+                                保存
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </uib-tab>
+            <uib-tab index="2" heading="Tab Two">
+                <div class="row third-page">
+                    <div class="row">
+                        <div class="text-center job-title col-lg-2 col-md-2 col-sm-2">
+                            <span ng-click="getList()">工作履历</span>
+                        </div>
+                    </div>
+                    <div class="row" ng-repeat="job in jobList">
+                        <div class="text-right">
+                            <a ng-click="delJob($index)">删除</a>
+                        </div>
+                        <table class="table table-bordered">
+                            <tr>
+                                <td col-md-6 colspan="3">工作单位</td>
+                                <td class="col-md-3">起始时间</td>
+                                <td class="col-md-3">终止时间</td>
+                            </tr>
+                            <tr>
+                                <td col-md-6 colspan="3"><input class="form-control" type="text"
+                                                                ng-model="job.workUnit" maxlength="50"></td>
+                                <td class="col-md-3">
+                                      <p class="input-group text-center date-pick">
+                                          <input type="text" class="form-control" uib-datepicker-popup
+                                                 ng-model="job.workTimeStart" is-open="job.openedStart"
+                                                 datepicker-options="dateOptions"
+                                                 close-text="关闭" clear-text="清空" current-text="今天" readonly/>
+                                          <span class="input-group-btn">
+                                            <button type="button" class="btn btn-defatrt" ng-click="openWorkStart($index)">
+                                              <i class="glyphicon glyphicon-calendar"></i>
+                                            </button>
+                                          </span>
+                                      </p>
+                                </td>
+                                <td class="col-md-3">
+                                  <p class="input-group text-center date-pick">
+                                      <input type="text" class="form-control" uib-datepicker-popup
+                                             ng-model="job.workTimeEnd" is-open="job.openedEnd"
+                                             datepicker-options="dateOptions"
+                                             close-text="关闭" clear-text="清空" current-text="今天" readonly/>
+                                      <span class="input-group-btn">
+                                        <button type="button" class="btn btn-defatrt" ng-click="openWorkEnd($index)">
+                                          <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+                                      </span>
+                                  </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-3">工作岗位</td>
+                                <td class="col-md-1">月薪</td>
+                                <td class="col-md-2">证明人</td>
+                                <td class="col-md-3">联系电话</td>
+                                <td class="col-md-3">离职原因</td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-3"><input class="form-control" maxlength="20" type="text" ng-model="job.position">
+                                </td>
+                                <td class="col-md-1"><input class="form-control" type="text" ng-model="job.monthlySalary"></td>
+                                <td class="col-md-2"><input class="form-control" maxlength="10" type="text" ng-model="job.certifier">
+                                </td>
+                                <td class="col-md-3"><input maxlength="11" class="form-control" type="text" ng-model="job.mobilePhone">
+                                </td>
+                                <td class="col-md-3"><input maxlength="50" class="form-control" type="text" ng-model="job.leaveReason">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="row text-right">
+                        <a href ng-click="addJob()">添加工作履历</a>
+                    </div>
+                    <div class="row text-center">
+                        <button class="btn btn-primary" ng-click="saveResume()">保存</button>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+        <div ng-show="showAlert" class="alert" uib-alert ng-class="'alert-' + (alertType || 'warning')">{{alertMsg}}
+        </div>
+    </div>
+</div>

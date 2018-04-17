@@ -1,0 +1,43 @@
+<div class="modal-header">
+    <h3 class="modal-title text-center">设置培训日期</h3>
+    <!-- <i class="glyphicon glyphicon-remove-circle text-right close-btn" ng-click="cancel()"></i> -->
+</div>
+<response-component status="responseStatus"></response-component>
+<div class="modal-body clearfix modal-padding">
+	<form novalidate="true" name="form">
+	    <div class="clearfix">
+	        <div class="col-md-12">
+	            <div class="form-inline">
+					<div>
+						<div class="form-group" style="margin: 0 0 20px 0;">
+						    <label for="">培训日期:</label>
+	    					    <div class="input-group">
+	    					        <input type="text" class="form-control"
+	    					               uib-datepicker-popup="{{dateFormat}}"
+	    					               ng-model="datepicker.startTime"
+	    					               is-open="datepicker.startOpened"
+	    					               datepicker-options="datepicker.startOptions"
+	    					               required
+	    					               close-text="关闭"
+	    					               clear-text="清空"
+	    					               current-text="今天"
+	    					               alt-input-formats="altInputFormats"
+	    					               readOnly="readOnly"
+	    					               />
+	    					        <span class="input-group-btn">
+	    					            <button type="button" class="btn btn-default" ng-click="open()">
+	    					                <i class="glyphicon glyphicon-calendar"></i>
+	    					            </button>
+	    					        </span>
+	    					    </div>
+						</div>
+					</div>
+	            </div>
+	        </div>
+	    </div>
+	    <div class="col-md-12 text-right">
+	        <button type="button" class="btn btn-primary" ng-class="{ 'disabled': form.$invalid }" ng-click="ok()" ng-disabled="form.$invalid">确定</button>
+	        <button type="button" class="btn btn-danger" ng-click="cancel()">取消</button>
+	    </div>
+	</form>
+</div>

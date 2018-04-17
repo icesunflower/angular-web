@@ -1,0 +1,1 @@
+require('./accidentDetailForUser.controller.js');

@@ -1,0 +1,112 @@
+<div class="accident">
+    <div class="row content clearfix">
+        <div class="module clearfix">
+            <div class="form-inline col-md-12 clearfix mar-btm25 mar-top14">
+                <div class="form-group col-md-3" style="padding-left: 0;">
+                    <label for="" class="label-con">选择城市:</label>
+                    <select class="form-control" ng-model="cityCode" style="width: 60%">
+                        <option value="" checked>全部</option>
+                        <option value="{{ item.cityCode }}" ng-repeat="item in cityList">{{ item.cityName }}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3" style="padding-left: 0;">
+                    <label for="" class="label-con">选择车队:</label>
+                    <select class="form-control" ng-model="fleetId" style="width: 60%">
+                        <option value="" checked>全部</option>
+                        <option value="{{ item.fleetId }}" ng-repeat="item in fleetArr">{{ item.fleetName }}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6" style="padding:7px 0 0 0">
+                    <label class="label-con" for="" style="margin-bottom: 0!important">状态:</label>
+                    <label class="checkbox-inline" ng-repeat="item in statusArr" style="padding: 0; margin-bottom: 0!important">
+                        <input type="checkbox" value="item.id" name="status" ng-model="status" ng-checked="item.checked" ng-click="changeStatus(item.id)"> {{ item.content }}
+                    </label>
+                </div>
+            </div>
+            <div class="form-inline col-md-12 clearfix mar-btm20">
+                <div class="form-group col-md-3" style="padding-left: 0">
+                    <label for="" class="label-con">车牌号:</label>
+                    <input class="form-control" ng-model="licensePlateNo" placeholder="请输入车牌号搜索" style="width: 60%">
+                </div>
+                <div class="col-md-5" style="padding-left: 0">
+                    <div class="form-group">
+                        <label for="inputTime">事故时间:</label>
+                        <div class="input-group" style="width: 34%">
+                            <div class="input-group status time" moment-picker="datepicker.startTime" locale="zh-cn" start-view="month" max-date="datepicker.endTime" format="YYYY-MM-DD">
+                                <input class="voucher-type form-control" placeholder="起始时间" ng-model="datepicker.startTime" ng-model-options="{ updateOn: 'blur'  }">
+                            </div>
+                            <!-- <input type="text" class="form-control" uib-datepicker-popup="{{dateFormat}}" ng-model="datepicker.startTime" is-open="datepicker.startOpened" datepicker-options="datepicker.startOptions" ng-required="true" close-text="关闭" clear-text="清空" current-text="今天" alt-input-formats="altInputFormats" readOnly="readOnly" id="inputTime" ng-change="change()" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open()">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span> -->
+                        </div>
+                        <label for="inputTime" style="width: 18px;">至:</label>
+                        <div class="input-group" style="width: 34%">
+                            <div class="input-group status time" moment-picker="datepicker.endTime" locale="zh-cn" start-view="month" min-date="datepicker.startTime" format="YYYY-MM-DD">
+                                <input class="voucher-type form-control" ng-model="datepicker.endTime" ng-model-options="{ updateOn: 'blur'  }" placeholder="结束时间">
+                            </div>
+                            <!--  <input type="text" class="form-control" uib-datepicker-popup="{{dateFormat}}" ng-model="datepicker.endTime" is-open="datepicker.endOpened" datepicker-options="datepicker.endOptions" ng-required="true" close-text="关闭" clear-text="清空" current-text="今天" alt-input-formats="altInputFormats" readOnly="readOnly" id="inputTime" ng-change="change()" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="openEnd()"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 margin-top7" style="padding-left: 0">
+                    <button class="btn btn-sm btn-blue" ng-click="exportFile()">导出表单</button>
+                    <button class="btn btn-sm btn-green" ng-click="queryAccidentList()">查询</button>
+                    <button class="btn btn-sm btn-red" style="padding:0" ng-click="addAccident()"><a class="btn-a">新增事故记录</a></button>
+                </div>
+            </div>
+        </div>
+        <div class="table-box">
+            <table class="table table-hover">
+                <thead class="thead">
+                    <tr>
+                        <td ng-repeat="item in table.titles">{{ item }}</td>
+                    </tr>
+                </thead>
+                <tbody class="tbody">
+                    <tr ng-repeat="item in table.body" ng-class="{ even: !$even }">
+                        <td>{{ item.licensePlateNo }}</td>
+                        <td>{{ item.carTypeName }}</td>
+                        <td>{{ item.fleetName }}</td>
+                        <td>{{ item.driverName }}</td>
+                        <td>{{ item.workPhone }}</td>
+                        <td>{{ item.statusName }}</td>
+                        <td>{{ item.occuredTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td>
+                            <a ui-sref="accidentDetailForSafetyDerpartment({id: item.id})" ng-click="">查看详情</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="load-nodata" ng-show="noData">
+                暂无数据
+            </div>
+            <div class="load-nodata" ng-show="loading">
+                正在加载中...
+            </div>
+        </div>
+        <!-- <div class="page-box clearfix">
+           <div class="page-size">每页{{ pageSize }}条</div>
+           <ul class="page-list clearfix">
+               <li><button class="pagination-prev" ng-click="getUpPage()" ng-disabled="!$ctrl.upPage"></button></li>
+               <li><button class="pagination-next" ng-click="getNextPage()" ng-disabled="!$ctrl.nextPage"></button></li>
+           </ul>
+       </div> -->
+        <div class="page-box">
+            <div class="page-size">共{{ pagination.total }}条</div>
+            <ul class="pagination pagination-sm clearfix" uib-pagination total-items="pagination.total" previous-text="1" next-text="1" max-size="5" boundary-link-numbers="true" rotate="false" ng-model="pagination.current" ng-change="pageChanged()" items-per-page="pagination.pageSize"></ul>
+        </div>
+    </div>
+    <!--  <div class="col-md-12" id="pagination">
+        <div class="col-md-4 text-left total-item">总计：{{ pagination.total }}条</div>
+        <div class="col-md-8 text-right" style="font-size: 12px;">
+            <ul uib-pagination total-items="pagination.total" previous-text="上一页" next-text="下一页" max-size="5" boundary-link-numbers="true" rotate="false" ng-model="pagination.current" items-per-page="pagination.pageSize" ng-change="pageChanged()">
+            </ul>
+        </div>
+    </div> -->
+</div>

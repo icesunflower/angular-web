@@ -1,0 +1,154 @@
+<form novalidate="true" name="formBasic">
+    <div>
+        <div class="sub-title">基本情况
+            <span class="btn-box">
+            <button class="btn btn-sm btn-green" ng-click="saveBaseinfo()" ng-class="{ 'disabled': formBasic.$invalid || !$ctrl.accidentInfo.basicSituation.address || !$ctrl.accidentInfo.basicSituation.pics || !$ctrl.accidentInfo.basicSituation.pics.length || !$ctrl.accidentInfo.basicSituation.carTypeName || !$ctrl.accidentInfo.basicSituation.fleetName || !$ctrl.accidentInfo.basicSituation.workPhone}" ng-disabled="formBasic.$invalid || !$ctrl.accidentInfo.basicSituation.address || !$ctrl.accidentInfo.basicSituation.pics || !$ctrl.accidentInfo.basicSituation.pics.length || !$ctrl.accidentInfo.basicSituation.carTypeName || !$ctrl.accidentInfo.basicSituation.fleetName || !$ctrl.accidentInfo.basicSituation.workPhone" ng-show="$ctrl.basicinfoEdit">保存</button>
+            <button class="btn btn-sm btn-red" ng-show="$ctrl.basicinfoEdit && showCancel" ng-click="cancelBtn()">取消</button>
+            <button class="btn btn-sm btn-blue" ng-click="updateBtn()" ng-show="$ctrl.showEdit && !canUpdateSafeyty">修改</button>
+        </span>
+        </div>
+        <div class="mar-left10 clearfix">
+            <div ng-show="$ctrl.basicinfoEdit">
+                <div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20">
+                    <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                        <label for="" class="label-common"><span class="red">*</span>车牌：</label>
+                        <input class="form-control" placeholder="请输入车牌进行搜索" ng-model="$ctrl.accidentInfo.basicSituation.licensePlateNo" ng-focus="showCar = false;" ng-blur="getCarInfoByNumber()" ng-change="changeCarNo()" required>
+                        <select-accident class="clearfix" item-list="carNoArr" driver-name="" job-number="" display-select="showCar" msg="noCar" car-type-name="$ctrl.accidentInfo.basicSituation.carTypeName" fleet-name="$ctrl.accidentInfo.basicSituation.fleetName" history-insurance="$ctrl.accidentInfo.basicSituation.historyInsurance" car-id="$ctrl.accidentInfo.basicSituation.carId" area-code="$ctrl.accidentInfo.basicSituation.areaCode" car-no="$ctrl.accidentInfo.basicSituation.licensePlateNo" fleet-id="$ctrl.accidentInfo.basicSituation.fleetId" style="position: relative;left: 60px;top: -7px;"></select-accident>
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                        <label for="" class="label-common"><span class="red">*</span>责任人姓名：</label>
+                        <input class="form-control" placeholder="输入行程管家工号搜索" ng-model="$ctrl.accidentInfo.basicSituation.driverName" ng-change="getStaffInfo()" required>
+                        <select-accident class="clearfix" item-list="staffNoArr" display-select="showStaff" msg="noStaff" driver-name="$ctrl.accidentInfo.basicSituation.driverName" driver-id="$ctrl.accidentInfo.basicSituation.driverId" job-number="$ctrl.accidentInfo.basicSituation.jobNumber" car-id="" area-code="" car-no="" work-phone="$ctrl.accidentInfo.basicSituation.workPhone" style="position: relative;left: 108px;top: -7px;"></select-accident>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="form-group">
+                            <label class="label-common"><span class="red">*</span>事故时间：</label>
+                            <div class="input-group" moment-picker="$ctrl.accidentInfo.basicSituation.occuredTime" locale="zh-cn" format="YYYY-MM-DD HH:mm:ss" style="display: inline-block;">
+                                <input class="form-control" placeholder="" ng-model="$ctrl.accidentInfo.basicSituation.occuredTime" ng-model-options="{ updateOn: 'blur'}" max-date="today" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20">
+                    <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                        <label for="" class="label-common"><span class="red">*</span>车型：</label>
+                        <div class="line-content">{{ $ctrl.accidentInfo.basicSituation.carTypeName }}</div>
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                        <label for="" class="label-common"><span class="red">*</span>车队：</label>
+                        <div class="line-content">{{ $ctrl.accidentInfo.basicSituation.fleetName }}</div>
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                        <label for="" class="label-common"><span class="red">*</span>历史报保险情况：</label>
+                        <div class="line-content">{{ $ctrl.accidentInfo.basicSituation.historyInsurance }}</div>
+                    </div>
+                </div>
+                <div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20">
+                    <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                        <label for="" class="label-common"><span class="red">*</span>事故类型：</label>
+                        <label class="radio-inline" style="margin-bottom: 2px !important">
+                            <input type="radio" class="radio-box" name="accidentType" value='0' ng-model="$ctrl.accidentInfo.basicSituation.accidentType" ng-checked="$ctrl.accidentInfo.basicSituation.accidentType==0" required>双车事故
+                        </label>
+                        <label class="radio-inline" style="margin-bottom: 2px !important">
+                            <input type="radio" class="radio-box" name="accidentType" value='1' ng-model="$ctrl.accidentInfo.basicSituation.accidentType" ng-checked="$ctrl.accidentInfo.basicSituation.accidentType==1" required>单车事故
+                        </label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="form-group">
+                            <label for="" class="label-common"><span class="red">*</span>联系电话：</label>
+                            <div class="line-content">{{ $ctrl.accidentInfo.basicSituation.workPhone }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="form-group">
+                            <label for="" class="label-common"><span class="red">*</span>事故地点：</label>
+                            <div class="line-content" style="max-width: 50%;vertical-align: top;line-height: 18px;">
+                                <span class="line-content" style="margin-bottom: 8px;">{{ $ctrl.accidentInfo.basicSituation.address }}</span>
+                                <a ng-click="getAddressModel()" class="address">地图点选</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20">
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12 clearfix">
+                        <label for="" class="label-common" style="float: left;"><span class="red">*</span>事故经过：</label>
+                        <textarea-component desc="$ctrl.accidentInfo.basicSituation.accidentProcess" limit="500" required='true' class="width80" style="float: left;width:90%"></textarea-component>
+                    </div>
+                </div>
+                <div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <label for="" class="label-common"><span class="red">*</span>照片： (最多20张)</label>
+                        <upload-component basicinfo-edit="$ctrl.basicinfoEdit" img-arr="$ctrl.accidentInfo.basicSituation.pics" on-delete="onDelete" on-originimg="onOriginimg" max="max" is-upload-img="isUploadImg"></upload-component>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="!$ctrl.basicinfoEdit">
+                <div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20">
+                    <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                        <label for="" class="label-common">车牌：</label>
+                        <div class="line-content">{{ $ctrl.accidentInfo.basicSituation.licensePlateNo }}</div>
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                        <label for="" class="label-common">责任人姓名：</label>
+                        <div class="line-content">{{ $ctrl.accidentInfo.basicSituation.driverName }}</div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="form-group">
+                            <label class="label-common">事故时间：</label>
+                            <div class="line-content">{{ $ctrl.accidentInfo.basicSituation.occuredTime }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20">
+                    <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                        <label for="" class="label-common">车型：</label>
+                        <div class="line-content">{{ $ctrl.accidentInfo.basicSituation.carTypeName }}</div>
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                        <label for="" class="label-common">车队：</label>
+                        <div class="line-content">{{ $ctrl.accidentInfo.basicSituation.fleetName }}</div>
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                        <label for="" class="label-common">历史报保险情况：</label>
+                        <div class="line-content">{{ $ctrl.accidentInfo.basicSituation.historyInsurance }}</div>
+                    </div>
+                </div>
+                <div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20">
+                    <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                        <label for="" class="label-common">事故类型：</label>
+                        <label class="radio-inline" style="margin-bottom: 2px !important">
+                            <input type="radio" class="radio-box" name="$ctrl.accidentInfo.basicSituation.accidentType" value='0' ng-model="$ctrl.accidentInfo.basicSituation.accidentType" disabled>双车事故
+                        </label>
+                        <label class="radio-inline" style="margin-bottom: 2px !important">
+                            <input type="radio" class="radio-box" name="$ctrl.accidentInfo.basicSituation.accidentType" value='1' ng-model="$ctrl.accidentInfo.basicSituation.accidentType" disabled>单车事故
+                        </label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="form-group">
+                            <label for="" class="label-common">联系电话：</label>
+                            <div class="line-content">{{ $ctrl.accidentInfo.basicSituation.workPhone }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="form-group">
+                            <label for="" class="label-common">事故地点：</label>
+                            <div class="line-content" style="max-width: 50%;vertical-align: top;line-height: 18px;">{{ $ctrl.accidentInfo.basicSituation.address }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20">
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <label for="" class="label-common">事故经过：</label>
+                        <div class="line-content">{{ $ctrl.accidentInfo.basicSituation.accidentProcess }}</div>
+                    </div>
+                </div>
+                <div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <label for="" class="label-common">照片：</label>
+                        <upload-component class="img-detail" img-arr="$ctrl.accidentInfo.basicSituation.pics" on-originimg="onOriginimg"></upload-component>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

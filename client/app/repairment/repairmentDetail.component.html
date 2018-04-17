@@ -1,0 +1,386 @@
+<div class="container-box repairment-detail">
+    <div class="detail-title-top">
+        <a class="return-back" href="javascript: window.history.go(-1)">
+            <i class="background"></i>
+            <i class="cover"></i>
+        </a>
+        <h2>
+            <span>全部</span>
+        </h2>
+    </div>
+    <div class="current-status block">
+        <span class="btn btn-primary" style="cursor: default"> {{ ['待处理', '待送修', '已送修', '已驳回', '已回场'][basic.currentStatus] }} </span>
+    </div>
+    <div class="detail">
+        <div class="detail-basic container-box-inner">
+            <h4>基本情况</h4>
+            <div class="content">
+                <ul>
+                    <li class="half-2-width">
+                        <label>车牌号：</label>
+                        <span>{{ basic.licensePlateNo }}</span>
+                    </li>
+                    <li class="half-2-width">
+                        <label>车型：</label>
+                        <span>{{ basic.carTypeName }}</span>
+                    </li>
+                    <li class="half-2-width">
+                        <label>所属车队：</label>
+                        <span>{{ basic.fleetName }}</span>
+                    </li>
+                    <li ng-hide="weekly" class="half-2-width">
+                        <label>上报人：</label>
+                        <span>{{ basic.reportUserName }}</span>
+                    </li>
+                    <li ng-show="weekly" class="half-2-width">
+                        <label>检查人：</label>
+                        <span>{{ basic.rummagerName }}</span>
+                    </li>
+                    <li ng-hide="weekly" class="half-2-width">
+                        <label>联系电话：</label>
+                        <span>{{ basic.phone }}</span>
+                    </li>
+                    <li class="half-2-width">
+                        <label>上报时间：</label>
+                        <span>{{ basic.reportDate | date : 'yyyy-MM-dd HH:mm' }}</span>
+                    </li>
+                    <li class="half-2-width">
+                        <label>报修类型：</label>
+                        <span>{{  ['故障申报', '月检', '事故申报'][basic.reportType] || '暂无' }}</span>
+                    </li>
+                    <li ng-hide="weekly" class="half-2-width">
+                        <label>故障类型：</label>
+                        <span>{{ basic.categoryName }}</span>
+                    </li>
+                    <li ng-hide="weekly" class="half-2-width">
+                        <label>具体情况：</label>
+                        <span>{{ basic.childCategoryName }}</span>
+                    </li>
+                    <li ng-hide="weekly" class="half-2-width">
+                        <label>上报地址：</label>
+                        <span>{{ basic.reportAddr }}</span>
+                    </li>
+                    <li ng-hide="weekly" class="half-2-width">
+                        <label>描述：</label>
+                        <span>{{ basic.reportDesc }}</span>
+                    </li>
+                    <li ng-show="weekly" class="half-2-width">
+                        <label>车损位置：</label>
+                        <span>{{ basic.childCategoryName }}</span>
+                    </li>
+                    <li ng-show="weekly" class="half-2-width">
+                        <label>备注：</label>
+                        <span>{{ basic.reportDesc }}</span>
+                    </li>
+                    <li class="full-width">
+                        <label>照片：</label>
+                        <span ng-if="basic.reportPics && basic.reportPics.length > 0" style="display: block; width: 100%; max-width: 100%">
+                            <span class="picture" ng-repeat="url in basic.reportPics" ng-click="checkPicture(url)">
+                                <img ng-src="{{ url }}">
+                            </span>
+                        </span>
+                        <span ng-if="basic.uploadPics && basic.uploadPics.length > 0" style="display: block; width: 100%; max-width: 100%">
+                            <span class="picture" ng-repeat="url in basic.uploadPics" ng-click="checkPicture(url)">
+                                <img ng-src="{{ url }}">
+                            </span>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="detail-title container-box-inner margin-top" ng-hide="hidePartWithCurrentStatus([0,1,2,3,4])">
+            <h4>维修管理</h4>
+            <span>请处理此条报修记录</span>
+            <button class="btn btn-primary margin-left-large" ng-click="tryToFillForm()">进行维修</button>
+            <button class="btn btn-danger margin-left-large" ng-click="handleRejected('adviseForRepairment')">立即驳回</button>
+        </div>
+        <div class="ensure-duty container-box-inner ng-hide" ng-hide="hidePartWithCurrentStatus([3])">
+            <form name="ensureDutyForm" novalidate>
+                <h4 class="has-head">
+                    <span>确立责任人</span>
+                    <div class="buttons" ng-show="isCaptain">
+                        <span ng-if="detectReponsibleEditStatus(basic.currentStatus)">
+                            <button class="btn btn-primary btn-sm" ng-click="handleEditor('ensureDuty', 'basic', $event)" ng-hide="ensureDuty.edit">编辑</button>
+                        </span>
+                        <span>
+                            <button class="btn btn-success btn-sm" ng-click="handleEditorForSaving('ensureDuty', 'basic', $event)" ng-show="ensureDuty.edit">保存</button>
+                        </span>
+                        <span>
+                            <a class="btn btn-default btn-sm" ng-click="handleEditorCancel('ensureDuty', 'basic', $event)" ng-show="ensureDuty.edit">取消</a>
+                        </span>
+                    </div>
+                </h4>
+                <div class="content">
+                    <ul style="overflow: inherit">
+                        <li>
+                            <label for="duty" style="width: 60px !important">责任人：</label>
+                            <div ng-class="{ 'has-error': ensureDutyForm.$submitted && !ensureDutyForm.duty.$valid }" style="width: 160px; padding: 0; margin-top: 2px" class="has-hint">
+                                <input class="form-control" id="duty" name="duty" type="hidden" ng-model="dutyMan.selected.name" ng-required="!basic.otherResponsibleId">
+                                <ui-select ng-model="dutyMan.selected"
+                                           theme="bootstrap"
+                                           reset-search-input="false"
+                                           ng-disabled="!ensureDuty.edit || basic.otherResponsibleId"
+                                           title="输入工号">
+                                    <ui-select-match placeholder="输入工号">{{ $select.selected.name }}</ui-select-match>
+                                    <ui-select-choices repeat="m in dutyMan.all track by $index"
+                                                       refresh="dutyMan.refresh($select.search)"
+                                                       refresh-delay="0">
+                                        <div ng-bind-html="m.name"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <span class="error" ng-show="ensureDutyForm.$submitted && !ensureDutyForm.duty.$valid">责任人不能为空</span>
+                            </div>
+                            <div class="has-hint" style="vertical-align: top">
+                                <div style="text-align: right" class="inline-block">
+                                    <input style="vertical-align: text-bottom; margin-top: 12px"
+                                           id="otherResponsible"
+                                           type="checkbox"
+                                           ng-disabled="!ensureDuty.edit"
+                                           ng-model="basic.otherResponsibleId" />
+                                    <label for="otherResponsible" style="width: auto !important; margin: 0; vertical-align: middle">其他</label>
+                                </div>
+                                <div ng-show="basic.otherResponsibleId" class="inline-block">
+                                    <input type="text"
+                                           class="form-control"
+                                           ng-required="basic.otherResponsibleId"
+                                           ng-model="basic.otherResp"
+                                           name="otherResp"
+                                           ng-disabled="!ensureDuty.edit"
+                                           placeholder="其他责任人">
+                                </div>
+                                <span class="error" ng-show="ensureDutyForm.$submitted && !ensureDutyForm.otherResp.$valid" style="margin-left: 50px">请填写其他责任人</span>
+                            </div>
+                        </li>
+                        <li>
+                            <label for="dutyComment" style="width: 60px !important">备注：</label>
+                            <div class="textarea-limitation">
+                                <textarea id="dutyComment"
+                                          class="form-control"
+                                          style="height: 100px"
+                                          ng-model="basic.confirmRespRemark"
+                                          ng-disabled="!ensureDuty.edit"
+                                          ng-change="textArea.limit(body.responsibleRemark, 'responsibleRemark')"></textarea>
+                                <span class="text-panel">{{ body.responsibleRemark.length || 0 }} / {{ textArea.upperBound }}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+        <div class="advise-for-repairment container-box-inner animated" ng-class="{ 'fadeIn': !hidePartWithCurrentStatus([-1,3])}" ng-hide="hidePartWithCurrentStatus([-1,3])">
+            <form novalidate name="adviseForRepairmentForm">
+                <h4 class="has-head">
+                    <span>维修处理</span>
+                    <div class="buttons" ng-hide="isCaptain || activateEditor('adviseForRepairment')">
+                        <span>
+                            <button class="btn btn-primary btn-sm" ng-click="handleEditor('adviseForRepairment', 'deal', $event)" ng-hide="adviseForRepairment.edit">编辑</button>
+                        </span>
+                        <span>
+                            <button class="btn btn-success btn-sm" ng-click="handleEditorForSaving('adviseForRepairment', 'deal', $event)" ng-show="adviseForRepairment.edit">保存</button>
+                        </span>
+                        <span>
+                            <a class="btn btn-default btn-sm" ng-click="handleEditorCancel('adviseForRepairment', 'deal', $event)" ng-show="adviseForRepairment.edit">取消</a>
+                        </span>
+                    </div>
+                </h4>
+                <div class="content">
+                    <ul>
+                        <li>
+                            <label>维修意见：</label>
+                            <div>
+                                <select class="form-control md-width"
+                                        required
+                                        ng-disabled="!adviseForRepairment.edit || basic.currentStatus != 0"
+                                        ng-model="repairIdForSelect"
+                                        ng-options="each for each in advises" ></select>
+                            </div>
+                        </li>
+                        <li>
+                            <label>预估维修费：</label>
+                            <div class="sub-content">
+                                <div class="has-hint totally inline-block">
+                                    <span><input type="text" class="form-control md-width" ng-model="deal.estimateTotalCost" readonly></span>
+                                    <span>元</span>
+                                </div>
+                            </div>
+                            <div class="sub-content" style="display: block">
+                                <div class="cost-line">
+                                    <span class="cost-line-tt" style="color: #666">行程管家承担：</span>
+                                    <span class="input">
+                                        <input type="text" class="form-control md-width" ng-model="deal.estimateDriverCost" ng-disabled="!adviseForRepairment.edit" ng-change="sumByPretotal(deal.estimateDriverCost, 'estimateDriverCost')" placeholder="输入金额">
+                                    </span>元
+                                </div>
+                                <div class="cost-line margin-left">
+                                    <span class="cost-line-tt">公司承担</span>
+                                    <span class="input">
+                                        <input type="text" class="form-control md-width" ng-model="deal.estimateCompanyCost" ng-disabled="!adviseForRepairment.edit" ng-change="sumByPretotal(deal.estimateCompanyCost, 'estimateCompanyCost')" placeholder="输入金额">
+                                    </span>元
+                                </div>
+                                <div class="cost-line margin-left">
+                                    <span class="cost-line-tt margin-right">
+                                        <input type="text" class="form-control md-width" ng-model="deal.estimateOther" ng-disabled="!adviseForRepairment.edit" placeholder="请输入其他承担者">
+                                    </span>
+                                    承担
+                                    <span class="input margin-left">
+                                        <input type="text" class="form-control md-width" ng-model="deal.estimateOtherCost" ng-disabled="!adviseForRepairment.edit" ng-change="sumByPretotal(deal.estimateOtherCost, 'estimateOtherCost')" placeholder="输入金额">
+                                    </span>元
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <label>备注：</label>
+                            <div class="textarea-limitation">
+                                <textarea class="form-control" style="height: 100px" ng-model="body.repairRemark" ng-disabled="!adviseForRepairment.edit"
+                                                                                                                  ng-change="textArea.limit(body.repairRemark, 'repairRemark')"></textarea>
+                                <span class="text-panel">{{ body.repairRemark.length || 0 }} / {{ textArea.upperBound }}</span>
+                            </div>
+                        </li>
+                        <li ng-hide="itsOwnership == 1">
+                            <label style="width: auto !important">维修期间是否将车辆更改为机务管辖：</label>
+                            <div class="textarea-limitation">
+                                <label style="width: 40px !important">
+                                    <input type="radio" ng-model="deal.ownership" value="1" name="ownership" ng-disabled="!adviseForRepairment.edit || basic.currentStatus != 0" required /> 是
+                                </label>
+                                <label style="width: 40px !important">
+                                    <input type="radio" ng-model="deal.ownership" value="0" name="ownership" ng-disabled="!adviseForRepairment.edit || basic.currentStatus != 0" required /> 否
+                                </label>
+                                <span
+                                    class="error"
+                                    ng-show="adviseForRepairmentForm.$submitted && !adviseForRepairmentForm.ownership.$valid"
+                                    style="position: absolute; top: 6px; right: -50px; white-space: nowrap"
+                                    >该项必填</span>
+                            </div>
+                            <div ng-show="deal.ownership == 1" style="display: block">保存后，车辆将归于机务管辖。请在“车辆详情-更改管辖者”中更改该设置</div>
+                            <div ng-show="deal.ownership == 0" style="display: block">保存后，车辆将归于车队运营。请在“车辆详情-更改管辖者”中更改该设置</div>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+        <div class="repairment-record container-box-inner animated" ng-class="{ 'fadeIn': !hidePartWithCurrentStatus([-1,0,3])}" ng-hide="hidePartWithCurrentStatus([-1,0,3])">
+            <form name="repairmentRecordForm" novalidate>
+                <h4 class="has-head">
+                    <span>送修记录</span>
+                    <div class="buttons" ng-hide="isCaptain || activateEditor('repairmentRecord')">
+                        <span>
+                            <button class="btn btn-primary btn-sm" ng-click="handleEditor('repairmentRecord', 'send', $event)" ng-hide="repairmentRecord.edit">编辑</button>
+                        </span>
+                        <span>
+                            <button class="btn btn-success btn-sm" ng-click="handleEditorForSaving('repairmentRecord', 'send', $event)" ng-show="repairmentRecord.edit">保存</button>
+                        </span>
+                        <span>
+                            <a class="btn btn-default btn-sm" ng-click="handleEditorCancel('repairmentRecord', 'send', $event)" ng-show="repairmentRecord.edit">取消</a>
+                        </span>
+                    </div>
+                </h4>
+                <div class="content">
+                    <ul>
+                        <li>
+                            <label>送修时间：</label>
+                            <div style="display: inline-block; position: relative; height: 30px; line-height: 30px; width: 160px; ">
+                                <div ng-hide="repairmentRecord.edit" style="position: absolute: left: 0; top: 0; line-height: 30px">{{ send.repairDate | date: 'yyyy-MM-dd' }}</div>
+                                <div ng-hide="!repairmentRecord.edit">
+                                    <input class="form-control md-width"
+                                           style="position: absolute; left: 0; top: 0"
+                                           ng-model="sendTime.date"
+                                           format="YYYY-MM-DD"
+                                           ng-model-options="{ updateOn: 'blur' }"
+                                           placeholder="选择送修时间"
+                                           moment-picker="sendTime.date">
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <label>维修地点：</label>
+                            <div ng-class="{ 'has-error': repairmentRecordForm.$submitted && !repairmentRecordForm.repairAddress.$valid }" class="has-hint">
+                                <input type="text"
+                                       class="form-control md-width"
+                                       ng-model="send.repairAddress"
+                                       ng-disabled="!repairmentRecord.edit"
+                                       ng-change="limit15(send.repairAddress)"
+                                       name="repairAddress"
+                                       placeholder="请输入维修地点" required>
+                                <span class="error" ng-show="repairmentRecordForm.$submitted && !repairmentRecordForm.repairAddress.$valid">维修地点不能为空</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+        <div class="return-record container-box-inner animated" ng-class="{ 'fadeIn': !hidePartWithCurrentStatus([-1,0,1,3])}" ng-hide="hidePartWithCurrentStatus([-1,0,1,3])">
+            <form novalidate name="returnRecordForm">
+                <h4 class="has-head">
+                    <span>回场记录</span>
+                    <div class="buttons" ng-hide="isCaptain || activateEditor('returnRecord')">
+                        <span>
+                            <button class="btn btn-primary btn-sm" ng-click="handleEditor('returnRecord', 'back', $event)" ng-hide="returnRecord.edit">编辑</button>
+                        </span>
+                        <span>
+                            <button class="btn btn-success btn-sm" ng-click="handleEditorForSaving('returnRecord', 'back', $event)" ng-show="returnRecord.edit">保存</button>
+                        </span>
+                        <span>
+                            <a class="btn btn-default btn-sm" ng-click="handleEditorCancel('returnRecord', 'back', $event)" ng-show="returnRecord.edit">取消</a>
+                        </span>
+                    </div>
+                </h4>
+                <div class="content">
+                    <ul>
+                        <li>
+                            <label>回场时间：</label>
+                            <div style="display: inline-block; position: relative; height: 30px; line-height: 30px; width: 160px; ">
+                                <div ng-hide="returnRecord.edit" style="position: absolute: left: 0; top: 0; line-height: 30px">{{ back.backDate | date: 'yyyy-MM-dd' }}</div>
+                                <div ng-hide="!returnRecord.edit">
+                                    <input class="form-control md-width"
+                                           style="position: absolute; left: 0; top: 0"
+                                           ng-model="returnTime.date"
+                                           format="YYYY-MM-DD"
+                                           ng-model-options="{ updateOn: 'blur' }"
+                                           placeholder="选择回场时间"
+                                           moment-picker="returnTime.date">
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <label>实际维修费：</label>
+                            <div class="sub-content">
+                                <div class="has-hint totally inline-block">
+                                    <span><input type="text" class="form-control md-width" ng-value="back.totalCost" readonly></span>
+                                    <span>元</span>
+                                </div>
+                            </div>
+                            <div class="sub-content"  style="display: block">
+                                <div class="cost-line">
+                                    <span class="cost-line-tt" style="color: #666">行程管家承担：</span>
+                                    <span class="input">
+                                        <input type="text" class="form-control md-width" ng-model="back.driverCost" ng-disabled="!returnRecord.edit" ng-change="sumByTotal(back.driverCost, 'driverCost')" placeholder="输入金额">
+                                    </span>元
+                                </div>
+                                <div class="cost-line">
+                                    <span class="cost-line-tt">公司承担</span>
+                                    <span class="input">
+                                        <input type="text" class="form-control md-width" ng-model="back.companyCost" ng-disabled="!returnRecord.edit" ng-change="sumByTotal(back.companyCost, 'companyCost')" placeholder="输入金额">
+                                    </span>元
+                                </div>
+                                <div class="cost-line">
+                                    <span class="cost-line-tt">
+                                        <input type="text" class="form-control md-width" ng-model="back.other" placeholder="请输入其他承担者" ng-disabled="!returnRecord.edit">
+                                    </span>
+                                    承担
+                                    <span class="input"><input type="text" class="form-control md-width" ng-model="back.otherCost" ng-disabled="!returnRecord.edit" ng-change="sumByTotal(back.otherCost, 'otherCost')" placeholder="输入金额"></span>元
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <label>备注：</label>
+                            <div class="textarea-limitation">
+                                <textarea class="form-control" ng-model="back.remark" ng-disabled="!returnRecord.edit"
+                                                                                      ng-change="textArea.limit(back.remark, 'remark')"></textarea>
+                                <span class="text-panel">{{ body.backRemark.length || 0 }} / {{ textArea.upperBound }}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

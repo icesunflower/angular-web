@@ -1,0 +1,117 @@
+<div>
+    <div class="insdetail">
+        <div class="title-tag">{{weeklyCarNo}}</div>
+        <div class="form-inline delpadding">
+            <div class="search-board">
+                <h4 class="titleTime">当前显示：{{nowShowTime}}</h4>
+                <div class="form-group">
+                    <label for="inputTime">月检时间：</label>
+                    <div class="input-group" moment-picker="datepicker.startDate" locale="zh-cn" start-view="month" max-date="datepicker.endDate"
+                        format="YYYY-MM-DD HH:00">
+                        <input class="form-control" placeholder="起始时间" ng-model="datepicker.startDate" ng-model-options="{ updateOn: 'blur'  }">
+                    </div>
+                    <label for="inputTime">至</label>
+                    <div class="input-group" moment-picker="datepicker.endDate" locale="zh-cn" start-view="month" min-date="datepicker.startDate"
+                        format="YYYY-MM-DD HH:00">
+                        <input class="form-control" placeholder="结束时间" ng-model="datepicker.endDate" ng-model-options="{ updateOn: 'blur'  }">
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-success btn-search" ng-click="queryValuePre()">查询</button>
+            <button ng-show="weeklyownership!=2" type="button" class="btn btn-info btn-add" ui-sref="addWeeklyInspection({'carNo':weeklyCarNo})">新增月检记录</button>
+        </div>
+        <table class="table table-hover">
+            <thead class="thead">
+                <tr>
+                    <th style="min-width: 100px">月检时间</th>
+                    <th>检查人</th>
+                    <th>证照保险问题数</th>
+                    <th>运行检查问题数</th>
+                    <th>车身车损数</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody class="tbody">
+                <tr ng-repeat="item in tableList track by $index" ng-class="{'showit':item.isshow}">
+                    <td>{{ item.testingTime | date:'yyyy-MM-dd'}}</td>
+                    <td>{{ item.rummagerName }}</td>
+                    <td>{{ item.insuranceProblemNum }}</td>
+                    <td>{{ item.checkProblemNum }}</td>
+                    <td>{{ item.lossProblemNum }}</td>
+                    <td>
+                        <a class="btn btn-link" ng-click="forviewDetails(item,$index)">查看详情</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="load-nodata" ng-show="noData">
+            暂无数据
+        </div>
+        <div class="foot-tab">
+            <div class="totalnum">每页{{ weeklyListData.rows }}条</div>
+            <div class="page-num">
+                <ul uib-pagination total-items="bigTotalItems" ng-model="weeklyListData.pageNo" ng-change="changePage()" max-size="5" previous-text="<"
+                    next-text=">" class="pagination-sm" boundary-links="false" force-ellipses="true" items-per-page="weeklyListData.rows">
+                </ul>
+            </div>
+        </div>
+        <div class="title-tag margin-tp">月检详情</div>
+        <div class="insdetail-content">
+            <div class="insdetail-title">
+                <h4>基本检查</h4>
+                <button ng-show="showEditbtn" type="button" class="btn btn-info btn-small" ng-click="subbasic()">{{btnweeklyEdit}}</button>
+            </div>
+            <div class="bascinfo">
+                <div class="form-inline">
+                    <div>
+                        <h5 class="formtitle">基本信息：</h5>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="x5">检查人：</label>
+                        <span ng-show="!ifcanEdit" class="formText">{{basicInfo.rummagerName}}</span>
+                        <input ng-show="ifcanEdit" type="text" class="form-control" id="x5" ng-model="basicInfo.rummagerName">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="x2">车型：</label>
+                        <span class="formText">{{basicInfo.carTypeName}}</span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="x3">所属车队：</label>
+                        <span class="formText">{{basicInfo.fleetName}}</span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="x6">本次月检时间：</label>
+                        <div class="input-group">
+                            <span ng-show="!ifcanEdit" class="formText">{{basicInfo.testingTime}}</span>
+                            <div ng-show="ifcanEdit" class="input-group" moment-picker="basicInfo.testingTime" locale="zh-cn" start-view="month" format="YYYY-MM-DD HH:mm:ss">
+                                <input class="form-control" placeholder="开始时间" ng-model="basicInfo.testingTime" ng-model-options="{ updateOn: 'blur'  }">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <select-comp title="selTitle.insurc" compdata='selCompInsurc' remarks='basicInfo.insuranceDes' if-edit="ifcanEdit"></select-comp>
+                <select-comp title="selTitle.checkP" compdata='selCompCheck' remarks='basicInfo.checkDes' if-edit="ifcanEdit"></select-comp>
+            </div>
+        </div>
+        <div class="insdetail-content">
+            <div class="insdetail-title">
+                <h4>车损检查</h4>
+                <button ng-show="showAddbtn" type="button" class="btn btn-info btn-small" ui-sref="addNewdamage({'carNo':weeklyCarNo,'weeklyId':whichweeklyId})">新增车损</button>
+            </div>
+            <div class="form-inline">
+                <div class="car-damage" ng-repeat="item in cardamageDetail">
+                    <div class="mark-damage" ng-class="{'mark-damage-red':item.currentStatus==3,'mark-damage-org':item.currentStatus==0||item.currentStatus==1,'mark-damage-green':item.currentStatus==2||item.currentStatus==4}">{{item.currentStatusName}}</div>
+                    <div>
+                        <p class="damagetitl">{{item.categoryName}}</p>
+                        <a ng-click="gorepairment(item.id)">查看维修详情</a>
+                    </div>
+                    <h5 class="formtitle">车损照片：</h5>
+                    <div class="damage-img">
+                        <img ng-repeat="itemSrc in item.uploadPics track by $index" ng-src={{itemSrc}} alt="" class="img-thumbnail" />
+                    </div>
+                    <p class="damage-remarks">备注：{{item.reportDesc}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

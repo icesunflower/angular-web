@@ -1,0 +1,27 @@
+<div class="mar-btm20">
+    <div class="form-inline">
+        <div class="form-group col-md-2" style="padding: 0">
+            <label for="">城市:</label>
+            <select class="form-control" ng-model="$ctrl.cityCode" ng-options="item.cityCode as item.cityName for item in $ctrl.cityList" style="width: 60%"></select>
+        </div>
+    </div>
+</div>
+<div class="col-md-12" style="padding:0">
+    <ul class="nav nav-tabs" style="border-bottom:2px solid #1c1f21;margin: 20px 0">
+        <li class="uib-tab nav-item ng-scope ng-isolate-scope" ui-sref-active="active">
+            <a href="" class="nav-link ng-binding" ui-sref="inductionTraining.notStart">待培训</a>
+        </li>
+        <li class="uib-tab nav-item ng-scope ng-isolate-scope" ui-sref-active="active">
+            <a href="" class="nav-link ng-binding" ui-sref="inductionTraining.inProgress">培训中</a>
+        </li>
+        <li class="uib-tab nav-item ng-scope ng-isolate-scope" ui-sref-active="active">
+            <a href="" class="nav-link ng-binding" ui-sref="inductionTraining.qualified">培训合格</a>
+        </li>
+        <li class="uib-tab nav-item ng-scope ng-isolate-scope" ui-sref-active="active">
+            <a href="" class="nav-link ng-binding" ui-sref="inductionTraining.unQualified">培训不合格</a>
+        </li>
+        <li class="uib-tab nav-item ng-scope ng-isolate-scope" ui-sref="inductionTraining.dimission" ui-sref-active="active">
+            <a href="" class="nav-link ng-binding">培训期离职</a>
+        </li>
+    </ul>
+</div>

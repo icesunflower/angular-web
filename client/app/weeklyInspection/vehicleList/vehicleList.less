@@ -1,0 +1,217 @@
+@import './../weeklyInspection.less';
+.addcar {
+    float: right;
+    .magintop(10);
+    .maginrigt(20);
+}
+
+.check-content {
+    .padin(20, 0);
+    box-sizing: border-box;
+    font-size: 0;
+    .foronecheck {
+        display: inline-block;
+        .width(100);
+        text-align: center;
+        box-sizing: border-box;
+        border: 1px solid #1c1f21;
+        border-left: none;
+        background-color: #fff;
+        cursor: pointer;
+        span {
+            .fontSize(16);
+            color: #666;
+        }
+    }
+    .foronecheck:nth-of-type(1) {
+        border-left: 1px solid #1c1f21;
+    }
+    .checkedcolor {
+        background-color: #1c1f21;
+        span {
+            color: #fff;
+        }
+    }
+}
+
+.viewbox {
+    .modal-header {
+        border: 0;
+        padding-bottom: 0;
+        .viewbox-title {
+            .maginleft(-15);
+            display: inline-block;
+            .minWidth(72);
+            .height(24);
+            .lineHeight(24);
+            text-align: center;
+            background-color: #333;
+            color: #fff;
+            .fontSize(14);
+        }
+        .viewbox-close {
+            .maginrigt(30);
+            float: right;
+            .fontSize(18);
+            cursor: pointer;
+        }
+    }
+    label {
+        .width(111);
+        text-align: right;
+    }
+    .width-full {
+        .minWidth(320);
+        .width(320);
+    }
+    .sm-width {
+        .minWidth(160);
+    }
+    .form-inline {
+        overflow: hidden;
+        margin-bottom: 0!important;
+        .form-control {
+            background-color: #fff;
+        }
+        .form-control:disabled {
+            background-color: #eee;
+        }
+    }
+    .form-group {
+        .magintop(20);
+        white-space: nowrap;
+        input.wrong,
+        select.wrong {
+            border-color: #d04242;
+        }
+        .radio-inline {
+            .maginbotm(0);
+            text-align: left;
+        }
+    }
+    .panelmarkers {
+        position: relative;
+        left: -5px;
+        color: #FF0000;
+    }
+    .prompt {
+        color: #FF0000;
+    }
+    .textarea-num {
+        position: relative;
+        display: inline-block;
+        textarea {
+            width: 100%!important;
+            resize: none;
+            border-radius: 0;
+        }
+        .limit {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+        }
+    }
+    .small-textarea {
+        .width(320);
+        vertical-align: text-top;
+    }
+    .modal-body {
+        padding-top: 0;
+        overflow: hidden;
+    }
+    .footer {
+        .magintop(35);
+        .maginbotm(35);
+        text-align: center;
+    }
+}
+
+.title-name {
+    position: absolute;
+    position: absolute;
+    top: 25px;
+    right: 25px;
+}
+
+.insdetail {
+    background-color: #E9EBF1;
+    .form-inline {
+        position: relative;
+    }
+    .btn-box {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 2;
+        overflow: hidden;
+        .width(130);
+        text-align: center;
+        .btn-add {
+            .maginbotm(10);
+            .width(120);
+        }
+    }
+    .btn-add {
+        float: right;
+        vertical-align: baseline;
+    }
+    .insdetail-content {
+        .maginbotm(20);
+        .padbotm(80);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.14), 0 1px 15px rgba(0, 0, 0, 0.12);
+        background-color: #fff;
+        overflow: hidden;
+        .form-inline {
+            .padin(20, 20);
+            background-color: #fff;
+            overflow: hidden;
+            .col-md-3 {
+                padding: 0;
+            }
+        }
+        .timeaxis {
+            clear: both;
+            .maginleft(50);
+            .timeaxis-one {
+                position: relative;
+                .boderLeft(1, #666);
+            }
+            .timeaxis-one:nth-of-type(1) {
+                .spotone {
+                    top: 0;
+                    left: -7px;
+                    .width(14);
+                    .height(14);
+                    background-color: #51a4eb;
+                }
+                .carcont {
+                    .padtop(0);
+                }
+            }
+            .spotone {
+                position: absolute;
+                top: 34px;
+                left: -4px;
+                .width(8);
+                .height(8);
+                border-radius: 100%;
+                background-color: #666;
+            }
+            .carcont {
+                .maginleft(35);
+                .padtop(30);
+                .padbotm(10);
+                display: inline-block;
+                width: 80%;
+                .boderBottom(1, #eee);
+                i {
+                    float: right;
+                    font-style: normal;
+                }
+            }
+        }
+    }
+    .form-inline {
+        .padin(10, 10);
+    }
+}

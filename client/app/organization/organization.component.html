@@ -1,0 +1,73 @@
+<div class="body menus" style="overflow-x: hidden">
+    <h1 class="head-title">组织架构</h1>
+    <div class="menus-head" ng-class="{ 'hidden': !hideBody }">
+        <ul>
+            <li ng-repeat="company in all track by $index">
+                <div ng-mouseenter="company.hover = true" ng-mouseleave="company.hover = false">
+                    <i class="fa fa-lg fa-fw"
+                       ng-show="company.children.length > 0"
+                       ng-class="{ 'fa-caret-down': !company.isOpen, 'fa-caret-right': company.isOpen }"
+                       ng-click="toggle(company)"></i>
+                    <i class="fa fa-lg fa-fw" ng-show="company.children.length == 0" ng-class="{ 'fa-angle-right': company.children.length == 0 }"></i>
+                    <span ng-click="displayDetail(company)" ng-readonly="true" title="{{ company.name }}" style="cursor: default">{{ company.name }}</span>
+                    <span>&#91{{ company.employNumber || 0 }}&#93</span>
+                    <span ng-show="company.hover">
+                        <i class="fa fa-plus-square-o fa-fw action" title="添加" ng-click="add(company)"></i>
+                    </span>
+                </div>
+                <ul ng-hide="company.hideChildren">
+                    <li ng-repeat="company in company.children track by $index" ng-include="'children.html'"></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="menus-body animated" ng-class="{ 'hidden': hideBody, 'fadeInRight': !hideBody  }" >
+        <h2><span>{{ table.title }} <br/><br/>直属员工</span></h2>
+        <div>
+            <p>
+            <i class="fa fa-window-close-o fa-3x window-close" ng-click="hideDetail()" aria-hidden="true"></i>
+            <button class="btn btn-primary" ng-click="employeeModified()">添加员工</button>
+            </p>
+            <div class="table" style="min-height: 300px">
+                <table border="0" cellpadding="0" cellspacing="0">
+                    <thead style="background: #3074ae; color: white">
+                        <tr>
+                            <td ng-repeat="title in table.titles">{{ title }}</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="r in table.result">
+                            <td>{{ r.name }}</td>
+                            <td>{{ r.jobNo }}</td>
+                            <td>{{ r.mobilePhone }}</td>
+                            <td>{{ r.email }}</td>
+                            <td>
+                                <a ng-click="employeeModified(r)">修改</a>
+                                <a ng-click="departmentModified(r)">调整部门</a>
+                            </td>
+                        </tr>
+                        <tr ng-if="table.result.length == 0">
+                            <td colspan="{{ table.titles.length }}">
+                                <div style="padding: 20px 0; min-height: 260px; line-height: 260px">暂无数据</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="custom-pagination" style="text-align: right; padding: 0 20px">
+                <span>总计：{{ pagination.total }}条</span>
+                <ul class="pagination-sm"
+                    uib-pagination
+                    total-items="pagination.total"
+                    previous-text="上一页"
+                    next-text="下一页"
+                    max-size="5"
+                    items-per-page="pagination.size"
+                    boundary-link-numbers="true"
+                    ng-model="pagination.current"
+                    ng-change="pageChanged()"></ul>
+            </div>
+        </div>
+    </div>
+</div>

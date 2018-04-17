@@ -1,0 +1,1 @@
+require('./accidentDetailForFleet.controller.js');

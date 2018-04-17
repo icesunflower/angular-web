@@ -1,0 +1,167 @@
+<div class="insurance accident">
+    <div class="clearfix content">
+        <h2 class="accident-title">
+            <a href="javascript: window.history.go(-1)" class="return-back">
+                <i class="background"></i>
+                <i class="cover"></i>
+            </a>
+            <span class="title">{{ carNo }} 保险记录详情</span>
+            <button ng-show="ownership!=2" class="btn btn-primary" ng-click="createInsurance()" style="position: absolute;right: -12px;bottom:0">新增投保</button>
+        </h2>
+        <div class="clearfix module">
+            <h3 class="sub-title">本周期投保情况</h3>
+            <div class="clearfix col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <h4 style="margin: 0 0 10px 0;">交强险</h4>
+                    <div class="form-group">
+                        <label for="" class="label-common">保险单号:</label>
+                        <div class="line-content">{{ currentCompulsoryInsurance.compulsoryInsuranceNo }}</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="label-common">周期:</label>
+                        <div class="line-content">{{ currentCompulsoryInsurance.compulsoryInsuranceStartTime | date:'yyyy-MM-dd' }} 至 {{ currentCompulsoryInsurance.compulsoryInsuranceEndTime | date:'yyyy-MM-dd' }}</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="label-common">保费金额:</label>
+                        <div class="line-content">{{ currentCompulsoryInsurance.compulsoryInsuranceAmount | currency: '&yen;' }}</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="label-common">投保保险公司:</label>
+                        <div class="line-content">{{ currentCompulsoryInsurance.compulsoryInsuranceCompany }}</div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <h4 style="margin: 0 0 10px 0;">商业险</h4>
+                    <div class="form-group">
+                        <label for="" class="label-common">保险单号:</label>
+                        <div class="line-content">{{ currentCommercialInsurance.commercialInsuranceNo }}</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="label-common">周期:</label>
+                        <div class="line-content">{{ currentCommercialInsurance.commercialInsuranceStartTime | date:'yyyy-MM-dd' }} 至 {{ currentCommercialInsurance.commercialInsuranceEndTime | date:'yyyy-MM-dd' }}</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="label-common">保费金额:</label>
+                        <div class="line-content">{{ currentCommercialInsurance.commercialInsuranceAmount | currency: '&yen;' }}</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="label-common">投保保险公司:</label>
+                        <div class="line-content">{{ currentCommercialInsurance.commercialInsuranceCompany }}</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="label-common">保险类型:</label>
+                        <div class="line-content">
+                            <span ng-show="currentCommercialInsurance.commercialTypeBodyDamage == 1">车损险</span>
+                            <span ng-show="currentCommercialInsurance.commercialTypeThreeParty == 1">三者险</span>
+                            <span ng-show="currentCommercialInsurance.commercialTypeSet == 1">承运人责任险</span>
+                            <span ng-show="currentCommercialInsurance.commercialTypeDeductible == 1">不计免赔</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix module">
+            <h3 class="sub-title">本周期报案记录</h3>
+            <div class="clearfix col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label for="" class="label-common">本周期累计:</label>
+                        <div class="line-content">交强险报案{{ compulsoryTimes }}次、商业险报案{{ commercialTimes }}次</div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div>
+                        <div class="tab-title">
+                            <label for="" class="label-common">交强险</label>
+                        </div>
+                        <table class="table table-com table-hover">
+                            <thead>
+                             <!-- class="thead"  -->
+                                <tr>
+                                    <td ng-repeat="item in tableCurrent.title">{{ item }}</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in compulsoryList">
+                                    <td>{{ item.accidentTime | date:'yyyy-MM-dd'}}</td>
+                                    <td>{{ item.accidentType }}</td>
+                                    <!-- <td><a href="">查看详情</a></td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <div class="tab-title">
+                            <label for="" class="label-common">商业险</label>
+                        </div>
+                        <table class="table table-com table-hover">
+                            <thead>
+                                <tr>
+                                    <td ng-repeat="item in tableCurrent.title">{{ item }}</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in commercialList">
+                                    <td>{{ item.accidentTime | date:'yyyy-MM-dd' }}</td>
+                                    <td>{{ item.accidentType }}</td>
+                                    <!-- <td><a href="">查看详情</a></td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix module">
+            <h3 class="sub-title">历史投保记录</h3>
+            <div class="clearfix col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div>
+                        <div class="tab-title">
+                            <label for="" class="label-common">交强险</label>
+                        </div>
+                        <table class="table table-com table-hover">
+                            <thead>
+                                <tr>
+                                    <td ng-repeat="item in tableHistory.title">{{ item }}</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in tableHistory.bodys.hisCompulsoryInsuranceList">
+                                    <td>{{ item.compulsoryInsuranceNo }}</td>
+                                    <td>{{ item.compulsoryInsuranceStartTime | date:'yyyy-MM-dd' }}</td>
+                                    <td>{{ item.compulsoryInsuranceEndTime | date:'yyyy-MM-dd' }}</td>
+                                    <td>{{ item.compulsoryInsuranceAmount | currency: '&yen;' }}</td>
+                                    <td>{{ item.compulsoryInsuranceCompany }}</td>
+                                    <td>{{ item.compulsoryTimes }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <div class="tab-title">
+                            <label for="" class="label-common">商业险</label>
+                        </div>
+                        <table class="table table-com table-hover">
+                            <thead>
+                                <tr>
+                                    <td ng-repeat="item in tableHistory.title">{{ item }}</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in tableHistory.bodys.hisCommercialInsuranceList">
+                                    <td>{{ item.commercialInsuranceNo }}</td>
+                                    <td>{{ item.commercialInsuranceStartTime | date:'yyyy-MM-dd' }}</td>
+                                    <td>{{ item.commercialInsuranceEndTime | date:'yyyy-MM-dd' }}</td>
+                                    <td>{{ item.commercialInsuranceAmount | currency: '&yen;' }}</td>
+                                    <td>{{ item.commercialInsuranceCompany }}</td>
+                                    <td>{{ item.commercialTimes }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

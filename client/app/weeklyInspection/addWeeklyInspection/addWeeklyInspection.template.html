@@ -1,0 +1,147 @@
+<div style="background-color:#e9ebf1;">
+    <div class="newcheck-content">
+        <div class="foronecheck" ng-class="{'checkedcolor':inspectType}">
+            <span>基本检查</span>
+        </div>
+        <div class="foronecheck" ng-class="{'checkedcolor':!inspectType}">
+            <span>车损检查</span>
+        </div>
+    </div>
+    <div ng-show="addweeklyType" class="addcheck-detail">
+        <div class="form-inline panelinfo">
+            <div class="panelinfo-title">
+                <h5 class="formtitle">基本信息：</h5>
+            </div>
+            <div class="panelinfo-content">
+                <div class="form-group col-md-3">
+                    <label for="x2">车牌号：</label>
+                    <span class="formText">{{addInfoData.carNo}}</span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="x2">车型：</label>
+                    <span class="formText">{{addInfoData.carTypeName}}</span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="x3">所属车队：</label>
+                    <span class="formText">{{addInfoData.fleetName}}</span>
+                </div>
+                <div class="form-group col-md-3 no-warp">
+                    <label for="x3">上次月检时间：</label>
+                    <span class="formText no-warp">{{addInfoData.lastTestingTime}}</span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="x5">
+                        <span class="mark-must">*</span>检查人：</label>
+                    <input type="text" class="form-control input-name" id="x5" ng-model="newfillin.rummagerName">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="x6">
+                        <span class="mark-must">*</span>本次月检时间：</label>
+                    <div class="input-group" moment-picker="newfillin.testingTime" locale="zh-cn" start-view="month" format="YYYY-MM-DD HH:00:00">
+                        <input class="form-control" placeholder="时间" ng-model="newfillin.testingTime" ng-model-options="{ updateOn: 'blur'  }">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panelinfo">
+            <select-comp title="selTitle.insurc" compdata='addInfoData.insuranceList' remarks='newfillin.insuranceDes' if-edit="ifcanEdit"></select-comp>
+        </div>
+        <div class="panelinfo">
+            <select-comp title="selTitle.checkP" compdata='addInfoData.checkList' remarks='newfillin.checkDes' if-edit="ifcanEdit"></select-comp>
+        </div>
+        <div class="form-inline panelinfo">
+            <div class="panelinfo-title">
+                <h5 class="formtitle">当前车损：</h5>
+                <div class="subminewcheck">
+                    有新损伤，点击
+                    <button type="button" class="btn btn-danger btn-small" ng-click="newupdataInfo()">新增车损</button>
+                    无新损伤，点击
+                    <button type="button" class="btn btn-success btn-small" ng-click="updataInfo()">保存基本检查记录</button>
+                </div>
+            </div>
+            <div class="panelinfo-content">
+                <div class="form-group col-md-12">
+                    <label>
+                        <a ng-click="damagedPhotos()" class="btn btn-link">点击查看</a>具体照片
+                    </label>
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="x4">故障：</label>
+                    <span class="formText">{{addInfoData.malfunction}}</span>
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="x4">月检：</label>
+                    <span class="formText">{{addInfoData.weeklyCheck}}</span>
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="x4">事故：</label>
+                    <span class="formText">{{addInfoData.accident}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="!addweeklyType" class="addcheck-detail">
+        <div class="form-inline panelinfo">
+            <div class="sit-title panelinfo-title">
+                <h5 class="formtitle">勾选受损部位（如之前月检已经记录，请勿重复勾选）：</h5>
+            </div>
+            <ul class="ul-checkbox">
+                <li ng-repeat="item in addInfoData.lossList" class="checkboxcompdata  col-md-2">
+                    <input id="{{item.id}}" type="checkbox" ng-model="item.checked" ng-change="forchecchange(item)" ng-disabled="item.ifEdit">
+                    <label class="checkbox-style" for="{{item.id}}"></label>
+                    <label class="checkbox-name" for="{{item.id}}">{{item.categoryName}}</label>
+                </li>
+            </ul>
+        </div>
+        <div class="form-inline panelinfo">
+            <div class="panelinfo-title">
+                <h5 class="formtitle">车损详情</h5>
+                <div class="subminewcheck">
+                    <button type="button" class="btn btn-success btn-small" ng-click="gobackweekly()">完成记录</button>
+                </div>
+            </div>
+            <div class="chooseuib">
+                <div class="tab-title-box">
+                    <h4 class="tab-title" ng-repeat="item in losschecked" ng-click="chooseCont(item)" ng-class="{'tab-title-choose':item.isTab}">{{item.categoryName}}</h4>
+                </div>
+                <div ng-show="carDamageMore" class="tab-loss">
+                    <div class="form-inline">
+                        <div>
+                            <h5 class="formtitle">车损照片：（最多3张）</h5>
+                            <button ng-show="losscheckedData[damageId].imgPreservation" type="submit" class="btn btn-info btn-small" ng-click="upCardamageImg()">保存</button>
+                        </div>
+                    </div>
+                    <div class="upload">
+                        <ul class="clearfix">
+                            <li class="upload-img" name="file" ngf-select="uploadImg($file)" ngf-multiple="false" ngf-pattern="'.pdf,.jpg,.jpeg'" ng-model="data.file"
+                                accept=".png,.jpg,.jpeg" ngf-max-size="1MB" ng-show="losscheckedData[damageId].basicinfoEdit && losscheckedData[damageId].imgPreservation">
+                            </li>
+                            <li ng-repeat="item in losscheckedData[damageId].imgArr" style="position:relative;">
+                                <img ng-src="{{item}}" alt="" width="100" height="100">
+                                <div class="img-btn clearfix">
+                                    <div class="mark"></div>
+                                    <a href="" ng-click="imgModel(item)">
+                                        <i class="glyphicon glyphicon-zoom-in"></i>
+                                    </a>
+                                    <a href="" ng-click="deleteImg(item)">
+                                        <i class="glyphicon glyphicon-remove" ng-show="losscheckedData[damageId].imgPreservation"></i>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="form-group textarea-box">
+                        <label for="remarks">备注：</label>
+                        <div class="textarea-num">
+                            <textarea class="form-control form-width" ng-disabled="!losscheckedData[damageId].imgPreservation" ng-model="losscheckedData[damageId].reportDesc"
+                                ng-change="changeLimitnumPic()" name="remarks" maxLength="50" rows="5" cols="60" required></textarea>
+                            <div class="limit">
+                                {{losscheckedData[damageId].limitNumPic?losscheckedData[damageId].limitNumPic:0}}/50
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

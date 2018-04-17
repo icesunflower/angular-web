@@ -1,0 +1,35 @@
+<div class="margin-top-20 margin-bottom-20">
+    <form name="valid_form" novalidate ng-submit="validF()" class="margin-top-20 margin-bottom-20" >
+        <fieldset>
+            <legend> Valid Form</legend>
+            <div class="row">
+                <div class="col-md-6" >
+                    <input type="number" ng-model="size" name="size"
+                           min="0" max="10" integer />{{size}}</label><br />
+                    <span ng-show="valid_form.size.$error.integer">The value is not a valid integer</span>
+                    <span ng-show="valid_form.size.$error.min || valid_form.size.$error.max">The value must be in range 0 to 10!</span>
+                </div>
+            </div>
+            <a ng-href="{{myHref}}">I am feeling lucky</a>
+            <button type="submit" class="btn btn-success">submit</button>
+        </fieldset>
+    </form>
+
+    <div>
+        <input type="text" ng-model="quation.x" ng-change="change()" />
+        <spam>{{quation.outt}}</spam>
+    </div>
+    <div>
+        <select ng-model="mycity" ng-options="city.name as city.name group by city.group for city in Cities"></select>
+    </div>
+    <div style="clear:both;">
+        <span>{{title23}}</span>
+        <span my-title title23="title23" ></span>
+    </div>
+    <div>
+        <button ng-click="showLocation()">location</button>
+    </div>
+    <div>{{extendValue | json}}</div>
+    <div>{{extendValue1 | json}}</div>
+</div>
+

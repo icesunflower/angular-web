@@ -1,0 +1,89 @@
+<div>
+    <div class="modal-header">
+        <h4 class="modal-title text-center">新增投保</h4>
+    </div>
+    <response-component status="responseStatus"></response-component>
+    <div class="modal-body clearfix modal-padding insurance-modal">
+        <form novalidate="true" name="form">
+            <div class="clearfix">
+                <div class="col-md-12">
+                    <div>
+                        <div>
+                            <div class="form-group mar-btm20">
+                                <label style="margin-bottom: 5px !important">保险类别</label>
+                                <select class="form-control form-width" id="" placeholder="" ng-model="insuranceType" required ng-options="item.id as item.content for item in insuranceTypeArrList"></select>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group mar-btm20">
+                                <label style="margin-bottom: 5px !important">保险单号</label>
+                                <input type="text" class="form-control form-width" id="" ng-model="insuranceNo" name="urgencyPhone" placeholder="" required>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group mar-btm20">
+                                <label style="margin-bottom: 5px !important">起保日期</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" uib-datepicker-popup="{{dateFormat}}" ng-model="datepicker.startTime" is-open="datepicker.startOpened" datepicker-options="datepicker.startOptions" required close-text="关闭" clear-text="清空" current-text="今天" alt-input-formats="altInputFormats" ng-change="change()" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="open()">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group mar-btm20">
+                                <label style="margin-bottom: 5px !important">到期日期</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" uib-datepicker-popup="{{dateFormat}}" ng-model="datepicker.endTime" is-open="datepicker.endOpened" datepicker-options="datepicker.endOptions" required close-text="关闭" clear-text="清空" current-text="今天" alt-input-formats="altInputFormats" ng-change="change()" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="openEnd()">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group mar-btm20s">
+                                <label style="margin-bottom: 5px !important">保费金额</label>
+                                <input type="text" class="form-control form-width" id="" ng-model="insuranceAmount" name="urgencyPhone" placeholder="" ng-pattern="/^\d+(\.\d{1,2})?$/" required>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group mar-btm20">
+                                <label style="margin-bottom: 5px !important">投保保险公司</label>
+                                <input type="text" class="form-control form-width" id="" ng-model="insuranceCompany" placeholder="" name="idNo" required>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group mar-btm20" ng-if="insuranceType == 2">
+                                <label style="margin-bottom: 5px !important">保险类型</label>
+                                <div class="checkbox">
+                                    <label class="checkbox-inline" style="margin-right:5px;">
+                                        <input type="checkbox" ng-checked="commercialTypeBodyDamageChecked.checked" ng-click="changeInsuranceType(0)">车损险
+                                    </label>
+                                    <label class="checkbox-inline" style="margin-right:5px;">
+                                        <input type="checkbox" ng-checked="commercialTypeThreePartyChecked.checked" ng-click="changeInsuranceType(1)">三者险
+                                    </label>
+                                    <label class="checkbox-inline" style="margin-right:5px;">
+                                        <input type="checkbox" ng-checked="commercialTypeSetChecked.checked" ng-click="changeInsuranceType(2)">承运人责任险
+                                    </label>
+                                    <label class="checkbox-inline" style="margin-right:5px;">
+                                        <input type="checkbox" ng-checked="commercialTypeDeductibleChecked.checked" ng-click="changeInsuranceType(3)">不计免赔
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 text-right">
+                <button type="button" class="btn btn-sm btn-green" ng-class="{ 'disabled': form.$invalid || insuranceType == 2 && (!commercialTypeBodyDamage && !commercialTypeThreeParty && !commercialTypeSet && !commercialTypeDeductible) }" ng-click="ok()" ng-disabled="form.$invalid || insuranceType == 2 && (!commercialTypeBodyDamage && !commercialTypeThreeParty && !commercialTypeSet && !commercialTypeDeductible)">确定</button>
+                <button type="button" class="btn btn-sm btn-red" ng-click="cancel()">取消</button>
+            </div>
+        </form>
+    </div>
+</div>

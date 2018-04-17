@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <h3 class="modal-title">设置复训</h3>
+    <!-- <i class="glyphicon glyphicon-remove-circle text-right close-btn" ng-click="cancel()"></i> -->
+</div>
+<response-component status="responseStatus"></response-component>
+<div class="modal-body clearfix modal-padding">
+    <div class="model-mar-btm20 col-md-12">
+        <div class="form-inline">
+            <div class="form-group col-md-12" style="padding: 0">
+                <label for="">所选择的员工将重回待培训列表。</label>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 text-right">
+        <button type="button" class="btn btn-primary" ng-class="{ 'disabled': form.$invalid }" ng-click="ok()" ng-disabled="form.$invalid">确定</button>
+        <button type="button" class="btn btn-danger" ng-click="cancel()">取消</button>
+    </div>
+</div>

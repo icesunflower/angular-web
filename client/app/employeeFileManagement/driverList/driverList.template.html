@@ -1,0 +1,392 @@
+<div class="employee-file">
+    <div class="employeeList">
+        <div class="row">
+            <div class="margin-both col-lg-2 col-md-2 col-sm-3 col-xs-6">
+                <span>城市:</span>
+                <div class="btn-group">
+                    <select class="form-control" name="" ng-model="checkOnJobData.cityId" ng-disabled="onlyOneSelect">
+                        <option value="{{city.id}}" ng-repeat="city in cityList">{{city.cityName}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <uib-tabset active="activeJustified" justified="true">
+        <uib-tab index="0" heading="在职员工">
+          <div class="row onjob">
+              <div class="row margin-both">
+                  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                      <div class="input-group">
+                          <input type="text" ng-model="checkOnJobData.mutiCondition" class="form-control"
+                                 placeholder="请输入员工姓名，联系电话或身份证号码...">
+                          <span class="input-group-btn">
+                  <button class="btn btn-primary" type="button" ng-click="searchCondition()">搜索</button>
+                </span>
+                      </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-4 col-xs-12 text-right">
+                      <a class="btn btn-default" ng-click="showMore()"><span ng-show="showMoreSearch">隐藏更多查询条件</span><span ng-hide="showMoreSearch">显示更多查询条件</span></a>
+                  </div>
+              </div>
+              <div ng-if="showMoreSearch" class="row margin-both">
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                      <span>档案状态:</span>
+                      <div class="btn-group">
+                          <select class="form-control" name="" ng-model="checkOnJobData.archive">
+                              <option value="">全部</option>
+                              <option value="{{archiveStatus.id}}" ng-repeat="archiveStatus in archiveStatusList">
+                                  {{archiveStatus.name}}
+                              </option>
+                          </select>
+                      </div>
+                      <span>{{archive}}</span>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                      <span>性别:</span>
+                      <div class="btn-group">
+                          <select class="form-control" name="" ng-model='checkOnJobData.sex'>
+                              <option value="">全部</option>
+                              <option value="男">男</option>
+                              <option value="女">女</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6" ng-if='jobStatus'>
+                      <span>人事状态:</span>
+                      <div class="btn-group">
+                          <select class="form-control" name="" ng-model="checkOnJobData.personnel">
+                              <option value="-1">全部</option>
+                              <option value="0">在职</option>
+                              <option value="1">离职申请中</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
+                      <span>籍贯:</span>
+                      <div class="btn-group">
+                          <select class="form-control" name="" ng-model="checkOnJobData.province">
+                              <option value="">全部</option>
+                              <option value="{{allProvince.name}}" ng-repeat="allProvince in allProvinceList">
+                                  {{allProvince.name}}
+                              </option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
+                      <span>司机类型:</span>
+                      <div class="btn-group">
+                          <select class="form-control" name="" ng-model="checkOnJobData.driverType">
+                              <option value="">全部</option>
+                              <option value="1">自有</option>
+                              <option value="2">合伙人</option>
+                              <option value="3">第三方</option>
+                          </select>
+                      </div>
+                  </div>
+              </div>
+              <div ng-if="showMoreSearch" class="row margin-both">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <span class="lineHeight-date">入职时间:</span>
+                    <div class="date-input">
+                        <div class="btn-group">
+                            <p class="input-group" style="margin:0">
+                                <input type="text" class="form-control" uib-datepicker-popup
+                                       ng-model="checkOnJobData.inductionStart" is-open="popup1.opened"
+                                       datepicker-options="dateOptions" ng-required="true"
+                                       close-text="关闭" close-text="清空" current-text="今天" readonly/>
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open1()"><i
+                                        class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    <span class="lineHeight-date" style="margin:0 5px">至</span>
+                    <div class="date-input">
+                        <div class="btn-group">
+                            <p class="input-group" style="margin:0">
+                                <input type="text" class="form-control" uib-datepicker-popup
+                                       ng-model="checkOnJobData.inductionEnd" is-open="popup2.opened"
+                                       datepicker-options="dateOptions" ng-required="true"
+                                       close-text="关闭" close-text="清空" current-text="今天" readonly/>
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open2()"><i
+                                            class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <span class="lineHeight-date">生日:</span>
+                    <div class="date-input">
+                        <div class="btn-group">
+                            <p class="input-group" style="margin:0">
+                                <input type="text" class="form-control" uib-datepicker-popup
+                                       ng-model="checkOnJobData.bornStart" is-open="popup3.opened"
+                                       datepicker-options="dateOptions" ng-required="true"
+                                       close-text="关闭" close-text="清空" current-text="今天" readonly/>
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open3()"><i
+                                            class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    <span class="lineHeight-date" style="margin:0 20px">至</span>
+                    <div class="date-input">
+                        <div class="btn-group">
+                            <p class="input-group" style="margin:0">
+                                <input type="text" class="form-control" uib-datepicker-popup
+                                       ng-model="checkOnJobData.bornEnd" is-open="popup4.opened" datepicker-options="dateOptions"
+                                       ng-required="true" close-text="关闭" close-text="清空" current-text="今天"
+                                       readonly/>
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open4()"><i
+                                            class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12 margin-both">
+                      <div class="col-lg-offset-9 col-md-offset-9 col-lg-1 col-md-1 col-sm-2 col-xs-2">
+                          <botton class="btn btn-primary" ng-click='checkOnJob()'>查询</botton>
+                      </div>
+                      <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2">
+                          <button class="btn btn-primary" type="button" name="button" ng-click="download()">批量导出</button>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="row margin-both">
+                  <div class="col-md-12">
+                      <table class="table table-hover">
+                          <thead>
+                          <tr>
+                              <td>档案编号</td>
+                              <td>姓名</td>
+                              <td>司机类型</td>
+                              <td>入职时间</td>
+                              <td>联系电话</td>
+                              <td>身份证号码</td>
+                              <td>性别</td>
+                              <td>生日</td>
+                              <td>籍贯</td>
+                              <td>档案状态</td>
+                              <td>人事状态</td>
+                              <td>培训日期</td>
+                              <td>操作</td>
+                          </tr>
+                          </thead>
+                          <tbody ng-show="showTable"
+                                 ng-init="archiveStatus=['待建档','已建档'];personnelStatus=['在职','离职申请中','离职']">
+                          <tr ng-repeat='item in jobingList'>
+                              <td ng-bind='item.archiveCode'></td>
+                              <td ng-bind='item.name'></td>
+                              <td ng-bind='item.driverTypeName'></td>
+                              <td ng-bind="item.hireDate |date:'yyyy-MM-dd'"></td>
+                              <td ng-bind='item.mobilePhone'></td>
+                              <td ng-bind='item.idCardNumber'></td>
+                              <td ng-bind='item.sex'></td>
+                              <td ng-bind="item.birthday |date:'yyyy-MM-dd'"></td>
+                              <td ng-bind='item.nativePlace'></td>
+                              <td ng-bind='archiveStatus[item.archiveStatus]'></td>
+                              <td ng-bind='personnelStatus[item.personnelStatus]'></td>
+                              <td ng-bind="item.trainingTime |date:'yyyy-MM-dd'"></td>
+                              <td><a ui-sref="driverDetail({driverId:item.id})" ng-click="getDetail()"
+                                     ng-show="item.showDetail">查看详情</a>
+                                  <a ui-sref="driverAdd({driverId:item.id})" ng-hide="item.showDetail">建档</a></td>
+                          </tr>
+                          </tbody>
+                      </table>
+                      <div class="loading-img text-center" ng-show="loadingImg" ng-bind='loadingText'></div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="col-lg-2 col-md-2 text-left">
+                          <pre>共：<span>{{bigTotalItems}}&nbsp;</span>条  页码: <span>{{bigCurrentPage}}</span> / {{numPages}}</pre>
+                      </div>
+                      <div class="col-lg-offset-4 col-md-offset-4 col-lg-6 col-md-6 text-right">
+                          <ul uib-pagination total-items="bigTotalItems" ng-model="bigCurrentPage"
+                              previous-text="上一页" next-text="下一页" first-text="第一页" last-text="最后一页"
+                              max-size="maxSize" class="pagination-sm" boundary-links="true"
+                              items-per-page="pageSize" num-pages="numPages"
+                              ng-change="changeOnJobList(bigCurrentPage)"></ul>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </uib-tab>
+        <uib-tab index="1" heading="离职员工">
+          <div class="row departing">
+              <div class="row margin-both">
+                  <div class="col-lg-3 col-md-3 col-sm-4">
+                      <span>员工姓名:</span>
+                      <div class="btn-group">
+                          <input class="form-control" ng-model="checkOnJobData.employeeName" type="text" name="" value="">
+                      </div>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-4">
+                      <span>员工电话:</span>
+                      <div class="btn-group">
+                          <input class="form-control" ng-model="checkOnJobData.employeeNumber" type="text" name="" value="">
+                      </div>
+                  </div>
+                  <div class="col-lg-offset-2 col-md-offset-2 col-lg-1 col-md-1 col-sm-2">
+                      <button class="btn btn-primary" type="button" name="button" ng-click="checkDeparted()">查询</button>
+                  </div>
+                  <div class="col-lg-offset-1 col-md-offset-1 col-lg-1 col-md-1 col-sm-2">
+                      <button class="btn btn-primary" type="button" name="button" ng-click="downloadDeparted()">批量导出
+                      </button>
+                  </div>
+              </div>
+              <div class="row margin-both">
+                  <div class="col-md-12">
+                      <table class="table table-hover">
+                          <thead>
+                          <tr>
+                              <td>档案编号</td>
+                              <td>姓名</td>
+                              <td>联系电话</td>
+                              <td>入职日期</td>
+                              <td>离职日期</td>
+                              <td>离职原因</td>
+                              <td>培训日期</td>
+                              <td>操作</td>
+                          </tr>
+                          </thead>
+                          <tbody ng-show="showTable2">
+                          <tr ng-repeat="departed in departedList">
+                              <td ng-bind="departed.archiveCode"></td>
+                              <td ng-bind="departed.name"></td>
+                              <td ng-bind="departed.mobilePhone"></td>
+                              <td ng-bind="departed.hireDate |date:'yyyy-MM-dd'"></td>
+                              <td ng-bind="departed.resignationTime |date:'yyyy-MM-dd'"></td>
+                              <td ng-bind="departed.reasonsForResignation"></td>
+                              <td ng-bind="departed.trainingTime |date:'yyyy-MM-dd'"></td>
+                              <td><a ui-sref="driverDetail({driverId:departed.id})">查看详情</a></td>
+                          </tr>
+                          </tbody>
+                      </table>
+                      <div class="loading-img text-center" ng-show="loadingImg2" ng-bind='loadingText2'></div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="col-lg-2 col-md-2 text-left">
+                          <pre>共：<span>{{bigTotalItems2}}&nbsp;</span>条 页码: <span>{{bigCurrentPage2}}</span> / {{numPages2}}</pre>
+                      </div>
+                      <div class="col-lg-offset-4 col-md-offset-4 col-lg-6 col-md-6 text-right">
+                          <ul uib-pagination total-items="bigTotalItems2" ng-model="bigCurrentPage2"
+                              previous-text="上一页" next-text="下一页" first-text="第一页" last-text="最后一页"
+                              items-per-page="pageSize2" max-size="maxSize" class="pagination-sm" boundary-links="true"
+                              num-pages="numPages2" ng-change="changeDepartedList(bigCurrentPage2)"></ul>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </uib-tab>
+        <uib-tab index="2" heading="离职申请中员工">
+          <div class="row departing">
+            <div class="row  margin-both">
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <span class="lineHeight-date">离职申请时间:</span>
+                <div class="date-input">
+                    <div class="btn-group">
+                        <p class="input-group" style="margin:0">
+                            <input type="text" class="form-control" uib-datepicker-popup
+                                   ng-model="checkDepartingData.startTime" is-open="popup5.opened"
+                                   datepicker-options="dateOptions" ng-required="true"
+                                   close-text="关闭" close-text="清空" current-text="今天" readonly/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open5()"><i
+                                        class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <span class="lineHeight-date" style="margin:0 20px">至</span>
+                <div class="date-input">
+                    <div class="btn-group">
+                        <p class="input-group" style="margin:0">
+                            <input type="text" class="form-control" uib-datepicker-popup
+                                   ng-model="checkDepartingData.endTime" is-open="popup6.opened" datepicker-options="dateOptions"
+                                   ng-required="true" close-text="关闭" close-text="清空" current-text="今天"
+                                   readonly/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open6()"><i
+                                        class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <span>员工姓名:</span>
+                <div class="btn-group">
+                    <input class="form-control" ng-model="checkDepartingData.employeeName" type="text" name="" value="">
+                </div>
+              </div>
+            </div>
+            <div class="row  margin-both">
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <span>员工电话:</span>
+                <div class="btn-group">
+                    <input class="form-control" ng-model="checkDepartingData.employeeNumber" type="text" name="" value="">
+                </div>
+              </div>
+              <div class="col-lg-offset-5 col-md-offset-5  col-lg-1 col-md-1 col-sm-2">
+                  <button class="btn btn-primary" type="button" name="button" ng-click="checkDeparting()">查询</button>
+              </div>
+            </div>
+          </div>
+              <div class="row margin-both">
+                  <div class="col-md-12">
+                      <table class="table table-hover">
+                          <thead>
+                          <tr>
+                              <td>档案编号</td>
+                              <td>姓名</td>
+                              <td>司机类型</td>
+                              <td>联系电话</td>
+                              <td>入职日期</td>
+                              <td>离职申请日期</td>
+                              <td>培训日期</td>
+                              <td>操作</td>
+                          </tr>
+                          </thead>
+                          <tbody ng-show="showTable3">
+                          <tr ng-repeat="departing in departingList">
+                              <td ng-bind="departing.archiveCode"></td>
+                              <td ng-bind="departing.name"></td>
+                              <td ng-bind="departing.driverTypeName"></td>
+                              <td ng-bind="departing.mobilePhone"></td>
+                              <td ng-bind="departing.resignationTime |date:'yyyy-MM-dd'"></td>
+                              <td ng-bind="departing.appResignationTime |date:'yyyy-MM-dd'"></td>
+                              <td ng-bind="departing.trainingTime |date:'yyyy-MM-dd'"></td>
+                              <td><a ui-sref="driverDetail({driverId:departing.id})">查看详情</a></td>
+                          </tr>
+                          </tbody>
+                      </table>
+                      <div class="loading-img text-center" ng-show="loadingImg3" ng-bind='loadingText3'></div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="col-lg-2 col-md-2 text-left">
+                          <pre>共：<span>{{bigTotalItems3}}&nbsp;</span>条  页码: <span>{{bigCurrentPage2}}</span> / {{numPages2}}</pre>
+                      </div>
+                      <div class="col-lg-offset-4 col-md-offset-4 col-lg-6 col-md-6 text-right">
+                          <ul uib-pagination total-items="bigTotalItems3" ng-model="bigCurrentPage3"
+                              previous-text="上一页" next-text="下一页" first-text="第一页" last-text="最后一页"
+                              items-per-page="pageSize3" max-size="maxSize" class="pagination-sm" boundary-links="true"
+                              num-pages="numPages3" ng-change="changeDepartingList(bigCurrentPage3)"></ul>
+                      </div>
+                  </div>
+              </div>
+        </uib-tab>
+        </uib-tabset>
+        <div ng-if="showAlert" class="alert" uib-alert ng-class="'alert-' + (alertType || 'warning')">{{alertMsg}}</div>
+    </div>
+    </div>

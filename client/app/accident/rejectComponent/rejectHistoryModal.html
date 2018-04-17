@@ -1,0 +1,32 @@
+<div class="accident" style="background: #fff">
+    <div class="modal-header">
+        <h3 class="modal-title text-center">驳回记录</h3>
+    </div>
+    <div class="modal-body clearfix modal-padding">
+        <form novalidate="true" name="form">
+            <div class="clearfix">
+                <div class="col-md-12" style="margin: 0 0 20px 0;">
+                    <div class="table-box table-scroll">
+                        <table class="table table-hover">
+                            <thead class="thead">
+                                <tr>
+                                    <td ng-repeat="item in table.titles">{{ item }}</td>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody">
+                                <tr ng-repeat="item in table.body" ng-class="{ even: !$even }">
+                                    <td style="min-width: 100px;">{{ item.reportDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                                    <td style="min-width: 100px;">{{ item.rejectTime | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                                    <td>{{ item.rejectCause }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 text-right">
+                <button type="button" class="btn btn-sm btn-red" ng-click="cancel()" style="margin-right: 0">关闭</button>
+            </div>
+        </form>
+    </div>
+</div>

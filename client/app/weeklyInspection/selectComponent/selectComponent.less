@@ -1,0 +1,38 @@
+@import './../weeklyInspection.less';
+.situations {
+    width: 100%;
+    overflow: hidden;
+    .form-inline {
+        .sit-title {
+            .maginx(15, 0, 5, 0);
+        }
+    }
+    ul {
+        .padin(0, 15);
+        li {
+            display: inline-block;
+            .maginrigt(100);
+        }
+    }
+    .textarea-box {
+        .padin(0, 20);
+        position: relative;
+        overflow: hidden;
+        .textarea-num {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            vertical-align: text-top;
+        }
+        textarea {
+            width: 100%;
+            resize: none;
+            border-radius: 0;
+        }
+        .limit {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+        }
+    }
+}

@@ -1,0 +1,1 @@
+require('./uploadComponent.component.js');

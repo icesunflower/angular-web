@@ -1,0 +1,20 @@
+<div class="intro row ">
+    <div class="col-md-10 col-md-offset-1">
+        <h2>this is a bsDemo page</h2>
+        <p>hello,{{name}}</p>
+        <a ui-sref=".home">go to home page</a>
+        <a ui-sref=".about">go to about page</a>
+        <div ui-view="about">about</div>
+        <div ui-view="columnOne">columnOne</div>
+        <div ui-view="columnTwo">columnTwo</div>
+        <bs-span season="season" on-log="log(text)" hero="hero"></bs-span>
+        <bs-form></bs-form>
+        <bs-select all-values="fruits"></bs-select>
+        <bs-info basicinfo-edit=""basicinfoEdit  accident-info="accidentInfo"></bs-info>
+        <bs-table></bs-table>
+        <button class="btn btn-default" ng-click="showModel()">弹出模态框</button>
+    </div>
+    <div ng-repeat="n in [42, 42, 41, 43] track by $index">
+        {{n}}
+    </div>
+</div>

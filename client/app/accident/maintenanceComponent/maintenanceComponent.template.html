@@ -1,0 +1,115 @@
+<div ng-show="$ctrl.showMaintenance">
+    <div class="sub-title title-maintenance">维修管理
+        <span class="maintenance-status" ng-show="$ctrl.repairName">维修状态：{{ $ctrl.accidentInfo.repairDetail.repair.currentStatusName }}</span>
+    </div>
+    <div class="mar-left10 clearfix">
+        <div class="clearfix" ng-show="$ctrl.accidentInfo.repairDetail.repair.currentStatus === 0 && !$ctrl.accidentInfo.repairDetail.repairDeal">
+            <div class="bor"></div>
+            <div class="clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20 mar-top20">
+                <div class="form-group" style="padding-left:15px;">
+                    <div class="line-content">等待机务部处理</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mar-left10 clearfix" ng-show="$ctrl.accidentInfo.repairDetail.repair.currentStatus === 3">
+        <div class="clearfix">
+            <div class="bor"></div>
+            <div class="clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20 mar-top20">
+                <div class="form-group" style="padding-left:15px;">
+                <label for="" class="label-common label-limit">驳回时间：</label>
+                    <div class="line-content">{{ $ctrl.accidentInfo.repairDetail.repair.rejectTime | date:'yyyy-MM-dd HH:mm:ss' }}</div>
+                </div>
+            </div>
+            <div class="clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20">
+                <div class="form-group" style="padding-left:15px;">
+                <label for="" class="label-common label-limit">驳回原因：</label>
+                    <div class="line-content">{{ $ctrl.accidentInfo.repairDetail.repair.rejectCause }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mar-left10 clearfix" ng-show="$ctrl.accidentInfo.repairDetail.repairDeal">
+        <div class="clearfix">
+            <div class="main-title">
+                <span class="main-tit">维修处理</span>
+            </div>
+            <div class="clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20 mar-top20">
+                <div class="form-group" style="padding-left:15px;">
+                    <label for="" class="label-common label-limit">维修意见：</label>
+                    <div class="line-content">{{ $ctrl.accidentInfo.repairDetail.repairDeal.repairName }}</div>
+                </div>
+            </div>
+            <div class="clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20">
+                <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                    <label for="" class="label-common label-limit">维修预估费：</label>
+                    <div class="line-content">{{ $ctrl.accidentInfo.repairDetail.repairDeal.estimateTotalCost }}<span class="unit-normal">元</span></div>
+                </div>
+            </div>
+            <div class="clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20">
+                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                    <label for="" class="label-common label-limit">行程管家承担：</label>
+                    <div class="line-content">{{ $ctrl.accidentInfo.repairDetail.repairDeal.estimateDriverCost }}<span class="unit-normal">元</span></div>
+                </div>
+                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                    <label for="" class="label-common">公司承担：</label>
+                    <div class="line-content">{{ $ctrl.accidentInfo.repairDetail.repairDeal.estimateCompanyCost }}<span class="unit-normal">元</span></div>
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                    <div class="line-content other-cost-label">{{ $ctrl.accidentInfo.repairDetail.repairDeal.estimateOther }}
+                        <label for="" class="label-common">承担：</label>
+                        <div class="line-content">{{ $ctrl.accidentInfo.repairDetail.repairDeal.estimateOtherCost }}<span class="unit-normal">元</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20">
+                <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                    <label for="" class="label-common label-limit">备注：</label>
+                    <div class="line-content">{{ $ctrl.accidentInfo.repairDetail.repairDeal.remark }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mar-left10 clearfix" ng-show="$ctrl.accidentInfo.repairDetail.repairSend">
+        <div class="clearfix">
+            <div ng-show="!$ctrl.maintenanceEdit">
+                <div class="main-title">
+                    <span class="main-tit">送修记录</span>
+                </div>
+                <div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20 mar-top20">
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <label for="" class="label-common label-limit">送修时间：</label>
+                        <div class="line-content">{{ $ctrl.accidentInfo.repairDetail.repairSend.repairDate }}</div>
+                    </div>
+                </div>
+                <div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20">
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <label for="" class="label-common label-limit">维修地点：</label>
+                        <div class="line-content">{{ $ctrl.accidentInfo.repairDetail.repairSend.repairAddress }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mar-left10 clearfix" ng-show="$ctrl.accidentInfo.repairDetail.repairBack">
+        <div class="clearfix">
+            <div class="main-title">
+                <span class="main-tit">回场记录</span>
+            </div>
+            <div>
+                <div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20 mar-top20">
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <label for="" class="label-common label-limit">回场时间：</label>
+                        <div class="line-content">{{ $ctrl.accidentInfo.repairDetail.repairBack.backDate }}</div>
+                    </div>
+                </div>
+                <div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20">
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                        <label for="" class="label-common label-limit">备注：</label>
+                        <div class="line-content">{{ $ctrl.accidentInfo.repairDetail.repairBack.remark }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

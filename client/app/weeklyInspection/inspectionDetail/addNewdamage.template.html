@@ -1,0 +1,74 @@
+<div style="background-color:#e9ebf1;">
+    <div class="newcheck-content">
+        <div class="foronecheck">
+            <span>基本检查</span>
+        </div>
+        <div class="foronecheck checkedcolor">
+            <span>车损检查</span>
+        </div>
+    </div>
+    <div class="addcheck-detail">
+        <div class="form-inline panelinfo">
+            <div class="sit-title panelinfo-title">
+                <h5 class="formtitle">勾选受损部位（如之前月检已经记录，请勿重复勾选）：</h5>
+            </div>
+            <ul class="ul-checkbox">
+                <li ng-repeat="item in addInfoData.lossList" class="checkboxcompdata  col-md-2">
+                    <input id="{{item.id}}" type="checkbox" ng-model="item.checked" ng-change="forchecchange(item)" ng-disabled="item.ifEdit">
+                    <label class="checkbox-style" for="{{item.id}}"></label>
+                    <label class="checkbox-name" for="{{item.id}}">{{item.categoryName}}</label>
+                </li>
+            </ul>
+        </div>
+        <div class="form-inline panelinfo">
+            <div class="panelinfo-title">
+                <h5 class="formtitle">车损详情</h5>
+                <div class="subminewcheck">
+                    <button type="button" class="btn btn-success btn-small" ng-click="gobackweekly()">完成记录</button>
+                </div>
+            </div>
+            <div class="chooseuib">
+                <div class="tab-title-box">
+                    <h4 class="tab-title" ng-repeat="item in losschecked" ng-click="chooseCont(item)" ng-class="{'tab-title-choose':item.isTab}">{{item.categoryName}}</h4>
+                </div>
+                <div ng-show="carDamageMore" class="tab-loss">
+                    <div class="form-inline">
+                        <div>
+                            <h5 class="formtitle">车损照片：（最多3张）</h5>
+                            <button ng-show="losscheckedData[damageId].imgPreservation" type="submit" class="btn btn-info btn-small" ng-click="upCardamageImg()">保存</button>
+                        </div>
+                    </div>
+                    <div class="upload">
+                        <ul class="clearfix">
+                            <li class="upload-img" name="file" ngf-select="uploadImg($file)" ngf-multiple="false" ngf-pattern="'.pdf,.jpg,.jpeg'" ng-model="data.file"
+                                accept=".png,.jpg,.jpeg" ngf-max-size="1MB" ng-show="losscheckedData[damageId].basicinfoEdit && losscheckedData[damageId].imgPreservation">
+                            </li>
+                            <li ng-repeat="item in losscheckedData[damageId].imgArr" style="position:relative;">
+                                <img ng-src="{{item}}" alt="" width="100" height="100">
+                                <div class="img-btn clearfix">
+                                    <div class="mark"></div>
+                                    <a href="" ng-click="imgModel(item)">
+                                        <i class="glyphicon glyphicon-zoom-in"></i>
+                                    </a>
+                                    <a href="" ng-click="deleteImg(item)">
+                                        <i class="glyphicon glyphicon-remove" ng-show="losscheckedData[damageId].imgPreservation"></i>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="form-group textarea-box">
+                        <label for="remarks">备注：</label>
+                        <div class="textarea-num">
+                            <textarea class="form-control form-width" ng-disabled="!losscheckedData[damageId].imgPreservation" ng-model="losscheckedData[damageId].reportDesc"
+                                ng-change="changeLimitnumPic()" name="remarks" maxLength="50" rows="5" cols="60" required></textarea>
+                            <div class="limit">
+                                {{losscheckedData[damageId].limitNumPic?losscheckedData[damageId].limitNumPic:0}}/50
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

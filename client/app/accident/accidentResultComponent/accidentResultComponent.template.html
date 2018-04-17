@@ -1,0 +1,76 @@
+<div>
+    <h3 class="sub-title">事故处理结果</h3>
+    <div class="mar-left10 clearfix">
+        <div class="clearfix">
+            <div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20">
+                <div class="form-group" style="padding-left:15px;">
+                    <label for="" class="label-common">损失承担情况（包括人伤）：</label>
+                    <br>
+                    <div class="checkbox">
+                        <label class="checkbox-inline" style="margin-right:5px;margin-bottom: 2px !important" ng-repeat="item in $ctrl.bearSituationArrList">
+                            <input type="checkbox" ng-checked="item.checked" disabled>{{ item.content }}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20">
+                <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                    <label for="" class="label-common label-limit">报案时间：</label>
+                    <div class="line-content">{{ $ctrl.accidentInfo.result.reportTime | date:'yyyy-MM-dd HH:mm:ss' }}</div>
+                </div>
+            </div>
+            <div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20">
+                <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                    <label for="" class="label-common label-limit">本车维修费：</label>
+                    <div class="line-content">{{ $ctrl.accidentInfo.result.carRepairCost }}<span class="unit-normal">元</span></div>
+                </div>
+            </div>
+            <div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20">
+                <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                    <label for="" class="label-common label-limit">行程管家承担：</label>
+                    <div class="line-content">{{ $ctrl.accidentInfo.result.driverCarCost }}<span class="unit-normal">元</span></div>
+                </div>
+                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                    <label for="" class="label-common">公司承担：</label>
+                    <div class="line-content">{{ $ctrl.accidentInfo.result.companyCarCost }}<span class="unit-normal">元</span></div>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-5">
+                    <div class="line-content other-cost-label">
+                        {{ $ctrl.accidentInfo.result.otherCar }}
+                        <label for="" class="label-common">承担：</label>
+                        <div class="line-content">{{ $ctrl.accidentInfo.result.otherCarCost }}<span class="unit-normal">元</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20">
+                <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                    <label for="" class="label-common label-limit">人员伤害费：</label>
+                    <div class="line-content">{{ $ctrl.accidentInfo.result.peopleCost }}<span class="unit-normal">元</span></div>
+                </div>
+            </div>
+            <div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20">
+                <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                    <label for="" class="label-common label-limit">行程管家承担：</label>
+                    <div class="line-content">{{ $ctrl.accidentInfo.result.driverPeopleCost }}<span class="unit-normal">元</span></div>
+                </div>
+                <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                    <label for="" class="label-common">公司承担：</label>
+                    <div class="line-content">{{ $ctrl.accidentInfo.result.companyPeopleCost }}<span class="unit-normal">元</span></div>
+                </div>
+                <div class="form-group col-lg-5 col-md-5 col-sm-5">
+                    <div class="line-content other-cost-label">
+                        {{ $ctrl.accidentInfo.result.otherPeople }}
+                        <label for="" class="label-common">承担：</label>
+                        <div class="line-content">{{ $ctrl.accidentInfo.result.otherPeopleCost }}<span class="unit-normal">元</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20">
+                <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                    <label for="" class="label-common label-limit">备注：</label>
+                    <div class="line-content">{{ $ctrl.accidentInfo.result.remark }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

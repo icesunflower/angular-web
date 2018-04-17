@@ -1,0 +1,1 @@
+require('./accidentList.controller.js');

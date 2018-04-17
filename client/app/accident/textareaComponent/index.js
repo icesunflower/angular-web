@@ -1,0 +1,1 @@
+require('./textareaComponent.component.js');

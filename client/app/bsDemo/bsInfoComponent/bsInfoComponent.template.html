@@ -1,0 +1,76 @@
+<form novalidate="true" name="formBasic">
+    <div class="mar-top20 clearfix">
+        <div >
+            <div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20">
+                <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                    <label for="" class="label-common"><span class="red">*</span>车型：</label>
+                    <input class="line-content" ng-model="$ctrl.accidentInfo.basicSituation.carTypeName" />
+                </div>
+                <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                    <label for="" class="label-common"><span class="red">*</span>车队：</label>
+                    <input class="line-content" ng-model="$ctrl.accidentInfo.basicSituation.fleetName" />
+                </div>
+                <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                    <label for="" class="label-common"><span class="red">*</span>历史报保险情况：</label>
+                    <input class="line-content" ng-model="$ctrl.accidentInfo.basicSituation.historyInsurance" />
+                </div>
+            </div>
+            <div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20">
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="form-group">
+                        <label class="label-common"><span class="red">*</span>事故时间：</label>
+                        <div class="input-group" moment-picker="$ctrl.accidentInfo.basicSituation.occuredTime"
+                             locale="zh-cn" format="YYYY-MM-DD HH:mm:ss" style="display: inline-block;">
+                            <input class="form-control" placeholder=""
+                                   ng-model="$ctrl.accidentInfo.basicSituation.occuredTime"
+                                   ng-model-options="{ updateOn: 'blur'}" max-date="today" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                    <label for="" class="label-common"><span class="red">*</span>事故类型：</label>
+                    <label class="radio-inline" style="margin-bottom: 2px !important">
+                        <input type="radio" class="radio-box" name="accidentType" value='0'
+                               ng-model="$ctrl.accidentInfo.basicSituation.accidentType"
+                               ng-checked="$ctrl.accidentInfo.basicSituation.accidentType==0" required>双车事故
+                    </label>
+                    <label class="radio-inline" style="margin-bottom: 2px !important">
+                        <input type="radio" class="radio-box" name="accidentType" value='1'
+                               ng-model="$ctrl.accidentInfo.basicSituation.accidentType"
+                               ng-checked="$ctrl.accidentInfo.basicSituation.accidentType==1" required>单车事故
+                    </label>
+                </div>
+              <!--  <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label for="" class="label-common"><span class="red">*</span>事故地点：</label>
+                        <div class="line-content" style="max-width: 50%;vertical-align: top;line-height: 18px;">
+                            <span class="line-content" style="margin-bottom: 8px;">{{ $ctrl.accidentInfo.basicSituation.address }}</span>
+                            <a ng-click="getAddressModel()" class="address">地图点选</a>
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+            <div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12 mar-btm20">
+                <div class="form-group col-lg-12 col-md-12 col-sm-12 clearfix">
+                    <label for="" class="label-common" style="float: left;"><span class="red">*</span>事故经过：</label>
+                    <div class="textarea-boxs" style="float: left;width:90%">
+                        <textarea name="" class="form-control" id="" rows="5" ng-model="desc" ng-required=true
+                                  maxlength="50" style="width: 100%" placeholder="请输入事故经过，不超过50字">
+                        </textarea>
+                        <span class="limit">{{ currentLen }}/50</span>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="form-inline clearfix col-lg-12 col-md-12 col-sm-12">
+                <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                    <label for="" class="label-common"><span class="red">*</span>照片： (最多20张)</label>
+                    <upload-component basicinfo-edit="$ctrl.basicinfoEdit"
+                                      img-arr="$ctrl.accidentInfo.basicSituation.pics" on-delete="onDelete"
+                                      on-originimg="onOriginimg" max="max"
+                                      is-upload-img="isUploadImg">
+                    </upload-component>
+                </div>
+            </div>-->
+        </div>
+    </div>
+</form>

@@ -1,0 +1,38 @@
+<div class="modal-header">
+    <h3 class="modal-title text-center">导入员工</h3>
+    <!-- <i class="glyphicon glyphicon-remove-circle text-right close-btn" ng-click="cancel()"></i> -->
+</div>
+<div class="modal-body clearfix modal-padding">
+    <form novalidate="true" name="form">
+        <div class="model-mar-btm20 col-md-12">
+            <div class="form-inline">
+                <div class="form-group col-md-6" style="padding: 0">
+                    <label for="">请选择该批员工的工作城市：</label>
+                    <select class="form-control" ng-model="cityId" ng-options="item.id as item.cityName for item in cityListUpload" style="width: 60%" required></select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 model-mar-btm20">
+            <div>
+                <div class="uploader">
+                    <a href="javascript:;" class="btn btn-primary btn-upload">
+			            选择导入文件
+			            <input class="uploader-btn" type="file" name="file"
+			                   nv-file-select
+			                   uploader="uploader" ng-require="true"/>
+			        </a>
+                    <div ng-repeat="item in uploader.queue" style="margin: 12px 0 0 20px; float: left;">
+                        {{ item.file.name }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <a href="" ng-click="open()" class="btn-action download">点击下载导入模版</a>
+        </div>
+        <div class="col-md-12 text-right">
+            <button type="button" class="btn btn-primary" ng-class="{ 'disabled': form.$invalid || !uploader.queue.length }" ng-click="upload()" ng-disabled="form.$invalid">确定</button>
+            <button type="button" class="btn btn-danger" ng-click="cancel()">取消</button>
+        </div>
+    </form>
+</div>

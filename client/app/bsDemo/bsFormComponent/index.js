@@ -1,0 +1,1 @@
+require('./bsFormComponent.component.js');

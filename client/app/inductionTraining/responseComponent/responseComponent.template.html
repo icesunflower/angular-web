@@ -1,0 +1,5 @@
+<div class="response text-center" ng-if="$ctrl.status.isLoading">
+	<div class="alert-box" ng-class="{'alert-success':$ctrl.status.isLoadingSuccess, 'alert-danger':$ctrl.status.isLoadingError}" >
+		{{$ctrl.status.title}}
+	</div>
+</div>

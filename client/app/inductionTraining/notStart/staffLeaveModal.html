@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <h3 class="modal-title text-center">离职</h3>
+    <!-- <i class="glyphicon glyphicon-remove-circle text-right close-btn" ng-click="cancel()"></i> -->
+</div>
+<response-component status="responseStatus"></response-component>
+<div class="modal-body clearfix modal-padding">
+    <form novalidate="true" name="form">
+        <div class="clearfix">
+            <div class="col-md-12" style="margin: 0 0 20px 0;">
+                <div>
+                    <div class="form-group textarea-box clearfix">
+                        <label for="">请输入离职原因，操作后，该员工将进入离职列表。</label>
+                        <textarea class="form-control form-width" id="" ng-model="leaveReason" rows="4" placeholder="" name="leaveReason" ng-maxLength="20" maxLength="20" required></textarea>
+                        <div class="limit">
+                            {{limitLen}}/20
+                        </div>
+                    </div>
+                </div>
+                <span ng-show="form.leaveReason.$dirty && form.leaveReason.$invalid" class="model-err">请输入离职原因</span>
+            </div>
+        </div>
+        <div class="col-md-12 text-right">
+            <button type="button" class="btn btn-primary" ng-class="{ 'disabled': form.$invalid }" ng-click="ok()" ng-disabled="form.$invalid">确定</button>
+            <button type="button" class="btn btn-danger" ng-click="cancel()">取消</button>
+        </div>
+    </form>
+</div>
