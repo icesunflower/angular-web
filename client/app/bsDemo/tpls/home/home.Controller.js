@@ -195,7 +195,7 @@ angular.module('shenmaApp')
             [index]: number,
         }))
 
-        class Queue6 {
+        class Queue8 {
             constructor(contents = []) {
                 this.queue = [...contents];
                 this.number = 23;
