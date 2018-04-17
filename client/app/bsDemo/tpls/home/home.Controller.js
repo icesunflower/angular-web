@@ -2,6 +2,7 @@
  * Created by Administrator on 2018/4/13.
  */
 import { compose, curry } from 'compose-parallel';
+import { ENGINE_METHOD_DIGESTS } from 'constants';
 const angular = require('angular');
 
 angular.module('shenmaApp')
@@ -201,9 +202,7 @@ angular.module('shenmaApp')
             }
 
             pop() {
-                const value = this.queue[0];
-                this.queue.splice(0, 1);
-                return value
+                console.log('ddd')
             }
 
         };
@@ -214,6 +213,77 @@ angular.module('shenmaApp')
             }
         };
 
+        const peek = new PeekableQueue();
+
+        // peek.pop();
+
+        class Jedis {
+            jump() {
+                this.jumping = true;
+                return this;
+            }
+
+            setHeight(height) {
+                this.height = height;
+                return this;
+            }
+        };
+
+
+        const luli = new Jedis();
+
+        luli.jump();
+        luli.setHeight(20);
+
+        console.log(luli);
+
+        class Jedi {
+            constructor(...args) {
+
+            }
+        };
+
+        const newnumbers = [1, 2, 3, 4, 5, 6];
+
+        let sum = 0;
+        newnumbers.forEach((num) => {
+            sum += num;
+        });
+
+        const sum1 = newnumbers.reduce((total, num) => total + num, 0);
+
+        const increasedByOne = [];
+        newnumbers.forEach((num) => {
+            increasedByOne.push(num + 1);
+        });
+
+        const increasedByOne2 = newnumbers.map(num => num + 1);
+
+        switch(foo){
+            case 1: {
+                let x=1;
+                break;
+            }
+            case 2: {
+                let y=2;
+                break;
+            }
+            default: {
+                return 'bye.'
+            }
+        }
+
+        /**
+         *
+         * @param {string} x
+         * @param {*} r
+         * @param {*} t
+         * @param {*} d
+         * @return {string} x
+         */
+        function demo(x,r,t,d){
+            return x;
+        }
 
 
 
