@@ -284,8 +284,4 @@ angular.module('shenmaApp')
         function demo(x,r,t,d){
             return x+r;
         }
-
-
-
-
     })
