@@ -1,0 +1,1 @@
+const greeting = 'helloworld!d';
