@@ -1,1 +1,1 @@
-const greeting = 'helloworld!d';
+const greeting = 'hellowor!';
